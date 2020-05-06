@@ -1,0 +1,5 @@
+MP1:
+  image: openjdk:11
+  script:
+    - cd MP1
+    - ./gradlew test
