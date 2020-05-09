@@ -22,6 +22,7 @@ public class ArrayMap implements Map<String,Integer>{
         }
         return null;
     }
+    
     public int get_Indix(String key){         // Hilfsfunktion , gibt uns die Indize der Elemnte in dem Array
         for(int i = 0 ; i < size ; i++){
             if(keys[i] ==key){
@@ -40,8 +41,8 @@ public class ArrayMap implements Map<String,Integer>{
             }
             keys = copy_Keys;
             values = copy_Values;
-
         }
+
     public void dic_reaseSize() {    /// Hilfsgunktion -> dikriminiert den Size des Array  bis die Hilfte
         String[] copy_Keys = new String[keys.length/2];
         Integer[] copy_Values = new Integer[values.length/2];
@@ -51,12 +52,7 @@ public class ArrayMap implements Map<String,Integer>{
         }
         keys = copy_Keys;
         values = copy_Values;
-
     }
-
-
-
-
 
     @Override
     public void put(String key, Integer value) {
@@ -82,24 +78,18 @@ public class ArrayMap implements Map<String,Integer>{
             for (int j = indix; j < keys.length - 1; j++) {  //  elemente nach links verschieben
                 keys[j] = keys[j + 1];
                 values[j] = values[j + 1];
-
             }
             size--;
-
             if(size < keys.length/2){
                 dic_reaseSize();
             }
-
         }
-
     }
-
 
     @Override
     public int size() {
         return size;
     }
-
 
     @Override
     public void keys(String[] array) {
