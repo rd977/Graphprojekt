@@ -22,7 +22,7 @@ public class ArrayMap implements Map<String,Integer>{
         }
         return null;
     }
-    
+
     public int get_Indix(String key){         // Hilfsfunktion , gibt uns die Indize der Elemnte in dem Array
         for(int i = 0 ; i < size ; i++){
             if(keys[i] ==key){
@@ -33,15 +33,15 @@ public class ArrayMap implements Map<String,Integer>{
     }
 
     public void inc_reaseSize() {    /// Hilfsgunktion -> inkriminiert den Size
-            String[] copy_Keys = new String[keys.length*2];
-            Integer[] copy_Values = new Integer[values.length*2];
-            for (int i = 0; i <size; i++){
-                copy_Keys[i] = keys[i];
-                copy_Values[i] = values[i];
-            }
-            keys = copy_Keys;
-            values = copy_Values;
+        String[] copy_Keys = new String[keys.length*2];
+        Integer[] copy_Values = new Integer[values.length*2];
+        for (int i = 0; i <size; i++){
+            copy_Keys[i] = keys[i];
+            copy_Values[i] = values[i];
         }
+        keys = copy_Keys;
+        values = copy_Values;
+    }
 
     public void dic_reaseSize() {    /// Hilfsgunktion -> dikriminiert den Size des Array  bis die Hilfte
         String[] copy_Keys = new String[keys.length/2];
@@ -58,8 +58,8 @@ public class ArrayMap implements Map<String,Integer>{
     public void put(String key, Integer value) {
 
         int indix = get_Indix(key);
-       if(size == keys.length &&indix == -1){     // Array Length inkriminieren wenn es kein genug Platz in Array gibt(die Doppelte)
-           inc_reaseSize();
+        if(size == keys.length &&indix == -1){     // Array Length inkriminieren wenn es kein genug Platz in Array gibt(die Doppelte)
+            inc_reaseSize();
         }
         if(indix == -1){          // falls der Key nicht vorgekomen ist
             keys[size] = key;
@@ -101,5 +101,4 @@ public class ArrayMap implements Map<String,Integer>{
             }
         }
     }
-
 }
