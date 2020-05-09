@@ -7,8 +7,8 @@ public class ArrayMap implements Map<String,Integer>{
     public Integer [] values;
     int size;
     public ArrayMap(){
-        keys = new String[5];
-        values = new Integer[5];
+        keys = new String[4];
+        values = new Integer[4];
         size = 0;
     }
 
@@ -31,10 +31,10 @@ public class ArrayMap implements Map<String,Integer>{
         return -1;
     }
 
-        public void inc_dic_reaseSize(int n) {    /// Hilfsgunktion -> ändert den Length von dem Array bei Fügen und Löschen . n ist skalar
-            String[] copy_Keys = new String[keys.length*n];
-            Integer[] copy_Values = new Integer[values.length*n];
-            for (int i = 0; i < keys.length; i++){
+    public void inc_reaseSize() {    /// Hilfsgunktion -> inkriminiert den Size
+            String[] copy_Keys = new String[keys.length*2];
+            Integer[] copy_Values = new Integer[values.length*2];
+            for (int i = 0; i <size; i++){
                 copy_Keys[i] = keys[i];
                 copy_Values[i] = values[i];
             }
@@ -42,6 +42,17 @@ public class ArrayMap implements Map<String,Integer>{
             values = copy_Values;
 
         }
+    public void dic_reaseSize() {    /// Hilfsgunktion -> dinkriminiert den Size des Array  bis die Hilfte
+        String[] copy_Keys = new String[keys.length/2];
+        Integer[] copy_Values = new Integer[values.length/2];
+        for (int i = 0; i <size; i++){
+            copy_Keys[i] = keys[i];
+            copy_Values[i] = values[i];
+        }
+        keys = copy_Keys;
+        values = copy_Values;
+
+    }
 
 
 
@@ -52,7 +63,7 @@ public class ArrayMap implements Map<String,Integer>{
 
         int indix = get_Indix(key);
        if(size == keys.length &&indix == -1){     // Array Length inkriminieren wenn es kein genug Platz in Array gibt(die Doppelte)
-           inc_dic_reaseSize(2);
+           inc_reaseSize();
         }
         if(indix == -1){          // falls der Key nicht vorgekomen ist
             keys[size] = key;
@@ -67,24 +78,28 @@ public class ArrayMap implements Map<String,Integer>{
     @Override
     public void remove(String key) {
         int indix = get_Indix(key);
-        if(indix!=-1 && keys[indix] == key ){       // wenn der Key ist im Array
-                for(int j = indix; j < keys.length - 1; j++){  //  elemente nach links verschieben
-                    keys[j] = keys[j+1];
-                    values[j] = values[j+1];
+        if(indix!=-1 && keys[indix] == key ) {       // wenn der Key ist im Array
+            for (int j = indix; j < keys.length - 1; j++) {  //  elemente nach links verschieben
+                keys[j] = keys[j + 1];
+                values[j] = values[j + 1];
 
-                }
-                size--;
             }
-        if(size < (keys.length/2)){     // Hier um wenige Platz in RAM zu reservieren , diskriminieren wir die Arrays
-            inc_dic_reaseSize(1);
+            size--;
+
+            if(size < keys.length/2){
+                dic_reaseSize();
+            }
 
         }
+
     }
+
 
     @Override
     public int size() {
         return size;
     }
+
 
     @Override
     public void keys(String[] array) {
