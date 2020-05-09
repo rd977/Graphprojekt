@@ -42,7 +42,7 @@ public class ArrayMap implements Map<String,Integer>{
             values = copy_Values;
 
         }
-    public void dic_reaseSize() {    /// Hilfsgunktion -> dinkriminiert den Size des Array  bis die Hilfte
+    public void dic_reaseSize() {    /// Hilfsgunktion -> dikriminiert den Size des Array  bis die Hilfte
         String[] copy_Keys = new String[keys.length/2];
         Integer[] copy_Values = new Integer[values.length/2];
         for (int i = 0; i <size; i++){
