@@ -3,6 +3,7 @@ package de.tukl.programmierpraktikum2020.mp1;
 import java.security.Key;
 import java.util.TooManyListenersException;
 
+
 public class ListMap<K ,V>  implements Map<K ,V> {
     Node<K, V> head;
     Node<K, V> tail;
@@ -21,22 +22,28 @@ public class ListMap<K ,V>  implements Map<K ,V> {
         }
         return  null;
     }
+    public Node getNode(K key) { // Hilfsfunktion _> vereinfacht den Wert einer Node zu ändern
+        Node<K, V> tmp = head;
+        while (tmp != null) {
+            if (tmp.key == key) {
+                return tmp;
+            }
+            tmp = tmp.next;
+        }
+        return  null;
+    }
+
 
 
 
     @Override
     public void put(K key, V value) {
-        Node<K, V> tmp = head;
-        boolean v = true;
-        while (tmp != null) {
-            if (tmp.key == key) {
-                tmp.value = value;
-                v = false;
-                break;
-            }
-            tmp = tmp.next; }
+       Node node =getNode(key);
+       if(node!=null){                //key ist schon geschbeichert
+           node.value=value;
+       }
 
-        if(v){
+        else {
             if (size == 0) {
                 Node<K, V> tmp1= new Node<K, V>();
                 tmp1.key = key;
@@ -61,20 +68,20 @@ public class ListMap<K ,V>  implements Map<K ,V> {
 
     @Override
     public void remove(K key) {
-        if (get(key) != null) {
+        if (get(key) != null) {     // remove wird duchgefüht nur wenn key in der Liste ist
             Node<K, V> tmp = head;
-            if (tmp.key == key) {
+            if (tmp.key == key) {  // falls key in dem head
                 head = tmp.next;
                 size--;
             } else {
                 while (tmp.next.key != key) {
                     tmp = tmp.next;
                 }
-                if (tmp.next == tail) {
+                if (tmp.next == tail) { // falls key am Ende
                     tail = tmp;
                     tail.next = null;
                     size--;
-                } else {
+                } else {   // falls key in dazwichen
                     tmp.next = tmp.next.next;
                     size--;
                 }
