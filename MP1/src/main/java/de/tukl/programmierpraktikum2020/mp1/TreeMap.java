@@ -3,7 +3,7 @@ import java.util.*;
 
 public class TreeMap<K, V> implements Map<K, V> {
 	Comparator k;
-	Tree root;
+	Tree root= new Tree();
 	int size=0;
 	
 	TreeMap(Comparator k) {
@@ -17,7 +17,7 @@ public class TreeMap<K, V> implements Map<K, V> {
 		V result=null;
 		while (true) {
 			
-		if (root1==null)
+		if (root1.value==null)
 			break;
 
 	    int a= k.compare(root1.key,key );
@@ -40,8 +40,9 @@ public class TreeMap<K, V> implements Map<K, V> {
 			Tree<K,V> root1=root;
 			while (true) {
 				
-			if (root1==null) 
-				root1= new Tree(K,V);
+			if (root1.value==null)
+				root1.value=value;
+			    root1.key=key;
 			    size++;
 		    int a= k.compare(root1.key,key );
 		    if (a==0)

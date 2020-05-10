@@ -2,13 +2,14 @@ package de.tukl.programmierpraktikum2020.mp1;
 public class Tree<K, V> {
 	public V value=null;
 	public K key=null;
-	public Tree<K, V> right=null;
-	public Tree<K, V> left=null;
+	public Tree<K, V> right=new Tree();
+	public Tree<K, V> left=new Tree();
 		
 	Tree(V value,K key){
 		this.key=key;
 		this.value=value;
 		}
+	Tree();
 	
 	public int count () {  // for keys method to function
 			if (value!=null)
