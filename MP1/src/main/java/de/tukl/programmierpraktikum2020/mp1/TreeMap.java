@@ -38,7 +38,7 @@ public class TreeMap<K, V> implements Map<K, V> {
 	 @Override
 	 public void put(K key, V value) {  //benutzt binary search tree  eigenschaft
 			Tree<K,V> root1=root;
-			while (boole =! true) {
+			while (true) {
 				
 			if (root1==null) 
 				root1= new Tree(K,V);
