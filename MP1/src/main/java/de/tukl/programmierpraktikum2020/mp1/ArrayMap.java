@@ -3,12 +3,10 @@ package de.tukl.programmierpraktikum2020.mp1;
 import java.security.Key;
 
 public class ArrayMap implements Map<String,Integer>{
-    public String [] keys;
-    public Integer [] values;
+    Pair<String,Integer> [] arr ;
     int size;
     public ArrayMap(){
-        keys = new String[4];
-        values = new Integer[4];
+        arr = new Pair[50];
         size = 0;
     }
 
@@ -16,75 +14,71 @@ public class ArrayMap implements Map<String,Integer>{
     @Override
     public Integer get(String key) {
         for(int i = 0 ; i < size ; i++){
-            if(keys[i].equals(key)){
-                return values[i];
+            if(arr[i].getFirst().equals(key)){
+                return arr[i].getSecond();
             }
         }
         return null;
     }
 
-    public int get_Indix(String key){         // Hilfsfunktion , gibt uns die Indize der Elemnte in dem Array
+    private int get_Indix(String key){         // Hilfsfunktion , gibt uns die Indize der Elemnte in dem Array
         for(int i = 0 ; i < size ; i++){
-            if(keys[i] ==key){
+            if(arr[i].getFirst()== key){
                 return i;
             }
         }
         return -1;
     }
 
-    public void inc_reaseSize() {    /// Hilfsgunktion -> inkriminiert den Size
-        String[] copy_Keys = new String[keys.length*2];
-        Integer[] copy_Values = new Integer[values.length*2];
+    private void inc_reaseSize() {    /// Hilfsgunktion -> inkriminiert den Size
+        Pair<String,Integer>[] copy_Keys = new Pair[arr.length*2];
         for (int i = 0; i <size; i++){
-            copy_Keys[i] = keys[i];
-            copy_Values[i] = values[i];
+            copy_Keys[i] = arr[i];
         }
-        keys = copy_Keys;
-        values = copy_Values;
+        arr = copy_Keys;
+
     }
 
-    public void dic_reaseSize() {    /// Hilfsgunktion -> dikriminiert den Size des Array  bis die Hilfte
-        String[] copy_Keys = new String[keys.length/2];
-        Integer[] copy_Values = new Integer[values.length/2];
+    private void dic_reaseSize() {    /// Hilfsgunktion -> dikriminiert den Size des Array  bis die Hilfte
+        Pair<String,Integer>[] copy_Keys = new Pair[arr.length/2];
         for (int i = 0; i <size; i++){
-            copy_Keys[i] = keys[i];
-            copy_Values[i] = values[i];
+            copy_Keys[i] = arr[i];
         }
-        keys = copy_Keys;
-        values = copy_Values;
+        arr = copy_Keys;
+
     }
 
     @Override
     public void put(String key, Integer value) {
-
-        int indix = get_Indix(key);
-        if(size == keys.length &&indix == -1){     // Array Length inkriminieren wenn es kein genug Platz in Array gibt(die Doppelte)
+        Pair<String,Integer> pair = new Pair<>(key,value);
+        int indx = get_Indix(key);
+        if(size == arr.length &&indx == -1){     // Array Length inkriminieren wenn es kein genug Platz in Array gibt(die Doppelte)
             inc_reaseSize();
         }
-        if(indix == -1){          // falls der Key nicht vorgekomen ist
-            keys[size] = key;
-            values[size] = value;
+        if(indx == -1){          // falls der Key nicht vorgekomen ist
+           arr[size] =pair;
             size++;
         }
         else{
-            values[indix]=value;  // falls der Key  schon im Array ist, hier änderen wir nur den Value
+            arr[indx].setSecond(value);  // falls der Key  schon im Array ist, hier änderen wir nur den Value
         }
     }
 
     @Override
     public void remove(String key) {
-        int indix = get_Indix(key);
-        if(indix!=-1 && keys[indix] == key ) {       // wenn der Key ist im Array
-            for (int j = indix; j < keys.length - 1; j++) {  //  elemente nach links verschieben
-                keys[j] = keys[j + 1];
-                values[j] = values[j + 1];
+        int indx = get_Indix(key);
+        if(indx!=-1 && arr[indx].getFirst() ==key ) {       // wenn der Key ist im Array
+            for (int j = indx; j < arr.length - 1; j++) {  //  elemente nach links verschieben
+                arr[j]=arr[j + 1];
+                arr[j]=arr[j + 1];
             }
             size--;
-            if(size < keys.length/2){
+            if(size < arr.length/2){
                 dic_reaseSize();
             }
         }
     }
+
 
     @Override
     public int size() {
@@ -97,7 +91,7 @@ public class ArrayMap implements Map<String,Integer>{
             throw new IllegalArgumentException();
         } else {
             for(int i = 0 ; i < size ; i++) {
-                array[i] = keys[i];
+                array[i] = arr[i].getFirst();
             }
         }
     }
