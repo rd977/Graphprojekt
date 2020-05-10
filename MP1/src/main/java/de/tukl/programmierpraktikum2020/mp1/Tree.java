@@ -1,17 +1,13 @@
 package de.tukl.programmierpraktikum2020.mp1;
-public class Tree {
-	
-	public class Node<K, V> {
-		public V value=null;
-		public K key=null;
-		public Node<K, V> right;
-		public Node<K, V> left;
+public class Tree<K, V> {
+	public V value=null;
+	public K key=null;
+	public Tree<K, V> right=null;
+	public Tree<K, V> left=null;
 		
-		Node(V value,K key){
-			this.key=key;
-			this.value=value;
-			this.right=null;
-			this.left=null;
+	Tree(V value,K key){
+		this.key=key;
+		this.value=value;
 		}
 	
 	public int count () {  // for keys method to function
@@ -31,6 +27,5 @@ public class Tree {
 		
 		}
 	
-		
-	}
+
 
