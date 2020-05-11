@@ -1,6 +1,6 @@
 package de.tukl.programmierpraktikum2020.mp1;
 
-public class Pair<String,Integer> {
+public class Pair {
     private String fst; //first member of pair
     private Integer sec; //second member of pair
 

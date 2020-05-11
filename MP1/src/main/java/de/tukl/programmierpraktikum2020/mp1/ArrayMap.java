@@ -3,7 +3,7 @@ package de.tukl.programmierpraktikum2020.mp1;
 import java.security.Key;
 
 public class ArrayMap implements Map<String,Integer>{
-    Pair<String,Integer> [] arr ;
+    Pair [] arr ;
     int size;
     public ArrayMap(){
         arr = new Pair[50];
@@ -31,7 +31,7 @@ public class ArrayMap implements Map<String,Integer>{
     }
 
     private void inc_reaseSize() {    /// Hilfsgunktion -> inkriminiert den Size
-        Pair<String,Integer>[] copy_Keys = new Pair[arr.length*2];
+        Pair[] copy_Keys = new Pair[arr.length*2];
         for (int i = 0; i <size; i++){
             copy_Keys[i] = arr[i];
         }
@@ -40,7 +40,7 @@ public class ArrayMap implements Map<String,Integer>{
     }
 
     private void dic_reaseSize() {    /// Hilfsgunktion -> dikriminiert den Size des Array  bis die Hilfte
-        Pair<String,Integer>[] copy_Keys = new Pair[arr.length/2];
+        Pair[] copy_Keys = new Pair[arr.length/2];
         for (int i = 0; i <size; i++){
             copy_Keys[i] = arr[i];
         }
@@ -50,7 +50,7 @@ public class ArrayMap implements Map<String,Integer>{
 
     @Override
     public void put(String key, Integer value) {
-        Pair<String,Integer> pair = new Pair<>(key,value);
+        Pair pair = new Pair(key,value);
         int indx = get_Indix(key);
         if(size == arr.length &&indx == -1){     // Array Length inkriminieren wenn es kein genug Platz in Array gibt(die Doppelte)
             inc_reaseSize();
