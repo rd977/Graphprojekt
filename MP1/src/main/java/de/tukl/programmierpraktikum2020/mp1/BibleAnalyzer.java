@@ -28,7 +28,15 @@ public class BibleAnalyzer {
         WordCountMap.put("Teufel", null);
         WordCountMap.put("Abraham", null);
         WordCountMap.put("Jakob", null);
-        WordCountMap.put("Jesus", null);
+        WordCountMap.put("Amen", null);
+        WordCountMap.put("Engel", null);
+        WordCountMap.put("Gottes", null);
+        WordCountMap.put("Gebote", null);
+        WordCountMap.put("Israel", null);
+        WordCountMap.put("Herr", null);
+        WordCountMap.put("aber", null);
+        WordCountMap.put("da", null);
+        WordCountMap.put("der", null);
         countWords(WordCountMap);                                       //Zähle wie oft jedes Beispielwort in der Bibel vorkommt und schreibe es in die Map.
         String[] words = new String[WordCountMap.size()];
         WordCountMap.keys(words);                                       //Schreibe die Wörter(keys) aus der Map in ein Array.
