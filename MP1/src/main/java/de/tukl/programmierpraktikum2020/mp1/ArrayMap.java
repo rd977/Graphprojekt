@@ -6,22 +6,14 @@ public class ArrayMap implements Map<String,Integer>{
     Pair [] arr ;
     int size;
     public ArrayMap(){
+        // initialisierung Arra mit length 50 (belibig)!
         arr = new Pair[50];
         size = 0;
     }
-
-
-    @Override
-    public Integer get(String key) {
-        for(int i = 0 ; i < size ; i++){
-            if(arr[i].getFirst().equals(key)){
-                return arr[i].getSecond();
-            }
-        }
-        return null;
-    }
-
-    private int get_Indix(String key){         // Hilfsfunktion , gibt uns die Indize der Elemnte in dem Array
+    //-----------get_Indix Funktion------------------------------------//
+    //gibt den Index der Position an der den Key in arr gechpeichert ist fall er existiert und -1 falls nicht
+    //DIese Funktion Hilft uns
+    private int get_Indix(String key){
         for(int i = 0 ; i < size ; i++){
             if(arr[i].getFirst()== key){
                 return i;
@@ -29,8 +21,9 @@ public class ArrayMap implements Map<String,Integer>{
         }
         return -1;
     }
-
-    private void inc_reaseSize() {    /// Hilfsgunktion -> inkriminiert den Size
+   //-------------------inc_reaseSize FUnktion--------------------------//
+    // vergrößert den Length des Arrays
+    private void inc_reaseSize() {
         Pair[] copy_Keys = new Pair[arr.length*2];
         for (int i = 0; i <size; i++){
             copy_Keys[i] = arr[i];
@@ -38,8 +31,9 @@ public class ArrayMap implements Map<String,Integer>{
         arr = copy_Keys;
 
     }
-
-    private void dic_reaseSize() {    /// Hilfsgunktion -> dikriminiert den Size des Array  bis die Hilfte
+    //-------------------dic_reaseSize FUnktion--------------------------//
+    //verkleinert den Length des Arrays
+    private void dic_reaseSize() {
         Pair[] copy_Keys = new Pair[arr.length/2];
         for (int i = 0; i <size; i++){
             copy_Keys[i] = arr[i];
@@ -49,30 +43,55 @@ public class ArrayMap implements Map<String,Integer>{
     }
 
     @Override
+    public Integer get(String key) {
+        //getFirst holt den Schlüssel von der Tuple die an der Position i geschpeichert
+        // get vergleicht jeden einzelnen Schlüssel aus der arr mit dem eingegeben Key
+        // und gibt ihren Value zurück
+        //wenn nichts gefunden ist dann der Schlüssel existiert nicht und gibt null zurück
+        for(int i = 0 ; i < size ; i++){
+            if(arr[i].getFirst().equals(key)){
+                return arr[i].getSecond();
+            }
+        }
+        return null;
+    }
+
+
+
+
+
+    @Override
     public void put(String key, Integer value) {
         Pair pair = new Pair(key,value);
         int indx = get_Indix(key);
-        if(size == arr.length &&indx == -1){     // Array Length inkriminieren wenn es kein genug Platz in Array gibt(die Doppelte)
+        //size == arr.length prügfen , weil das Array muss nicht voll sein
+        // wenn ist es der Fall dann der Length des Arrayes wird vergrößert und alled Elemente ins neuen Array koppiert werden
+        if(size == arr.length &&indx == -1){
             inc_reaseSize();
         }
-        if(indx == -1){          // falls der Key nicht vorgekomen ist
+        // idex == -1 bedeuted dass der schlüssel ist nicht in dem Array dann wird der Key und Value gefügt
+        if(indx == -1){
            arr[size] =pair;
             size++;
         }
+        //falls der Schlüssel ist bereit in dem Array , dann ändern wird nur seinen Value
         else{
-            arr[indx].setSecond(value);  // falls der Key  schon im Array ist, hier änderen wir nur den Value
+            arr[indx].setSecond(value);
         }
     }
 
     @Override
     public void remove(String key) {
         int indx = get_Indix(key);
-        if(indx!=-1 && arr[indx].getFirst() ==key ) {       // wenn der Key ist im Array
+        // Falls der Key im Array ist , wird gelöcht
+        if(indx!=-1 ) {
             for (int j = indx; j < arr.length - 1; j++) {  //  elemente nach links verschieben
                 arr[j]=arr[j + 1];
                 arr[j]=arr[j + 1];
             }
             size--;
+            //Uhm platz im RAM zu sparen , verkleinerb wir den Length des Arrays wenn
+            //die Anzhal der Elemente kleiner alls die Hälfte des Lengthes des Arrays
             if(size < arr.length/2){
                 dic_reaseSize();
             }
@@ -95,4 +114,6 @@ public class ArrayMap implements Map<String,Integer>{
             }
         }
     }
+
+
 }
