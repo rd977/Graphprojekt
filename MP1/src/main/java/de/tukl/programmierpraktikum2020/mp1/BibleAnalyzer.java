@@ -14,16 +14,16 @@ public class BibleAnalyzer {
 
 
     public static void main(String[] args) {
-        TreeMap<String, Integer> m = new TreeMap<>(Comparator.<String>naturalOrder());
-        countWords(m);
-        String[] words = new String[m.size()];
+        TreeMap<String, Integer> map = new TreeMap<>(Comparator.<String>naturalOrder());
+        countWords(map);
+        String[] words = new String[map.size()];
         //alle Wötrter in Array words speichern
-        m.keys(words);
+        map.keys(words);
         // Array words aufsteigent sortieren
-        sort(words, m);
+        sort(words, map);
         //print alle Wörter aud Console
         for (String s : words){
-            System.out.println(m.get(s) + " " + s);
+            System.out.println(map.get(s) + " " + s);
     }
 
 
