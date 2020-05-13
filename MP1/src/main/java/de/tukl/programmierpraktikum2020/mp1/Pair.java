@@ -1,8 +1,8 @@
 package de.tukl.programmierpraktikum2020.mp1;
 
 public class Pair {
-    private String fst; //first member of pair
-    private Integer sec; //second member of pair
+    private String fst; //KEY
+    private Integer sec; //VALUE
 
     public Pair(String fst, Integer sec) {
         this.fst = fst;
