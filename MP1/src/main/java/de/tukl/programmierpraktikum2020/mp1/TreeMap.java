@@ -135,16 +135,7 @@ public class TreeMap<K, V> implements Map<K, V> {
         return size;
     }
 
-   /* public void print(TreeNode<K,V> node) {
-        if (node == null) return;
 
-        print(node.left);
-       System.out.println("("+ node.key + ")" + " " + "("+node.value +")" );
-        print(node.right);
-    }
-    public void prin(){
-        print(root);
-    }*/
 
     @Override
     public void keys(K[] array) {
