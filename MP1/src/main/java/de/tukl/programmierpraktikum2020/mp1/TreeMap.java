@@ -79,6 +79,7 @@ public class TreeMap<K, V> implements Map<K, V> {
         keys_array(T.right, array);
     }
 
+
     //------------------addHelper Funktion ----------------------------------------------//
     private TreeNode<K, V> addHelper(TreeNode<K, V> node, K key, V value) {
         //Node wird gefügt und Size erhöht sobalde einer der unteren Fallunterscheidungen
@@ -134,6 +135,16 @@ public class TreeMap<K, V> implements Map<K, V> {
         return size;
     }
 
+   /* public void print(TreeNode<K,V> node) {
+        if (node == null) return;
+
+        print(node.left);
+       System.out.println("("+ node.key + ")" + " " + "("+node.value +")" );
+        print(node.right);
+    }
+    public void prin(){
+        print(root);
+    }*/
 
     @Override
     public void keys(K[] array) {
