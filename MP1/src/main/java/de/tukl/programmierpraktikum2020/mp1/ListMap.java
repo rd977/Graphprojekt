@@ -1,66 +1,58 @@
 package de.tukl.programmierpraktikum2020.mp1;
 
-import java.security.Key;
-import java.util.TooManyListenersException;
-
 
 public class ListMap<K ,V>  implements Map<K ,V> {
     Node<K, V> head;
     Node<K, V> tail;
     int size = 0;
 
-
+    //-----------getNode----------------------------//
+    //Gibt das Node des eingegebnen Svhlüssels zurück
+    public Node getNode(K key) {
+        Node<K, V> node = head;
+        while (node != null) {
+            if (node.key == key) {
+                return node;
+            }
+            node = node.next;
+        }
+        return  null;
+    }
 
     @Override
     public V get(K key) {
-        Node<K, V> tmp = head;
-        while (tmp != null) {
-            if (tmp.key == key) {
-               return tmp.value;
+        Node<K, V> node  = head;
+        while (node != null) {
+            if (node.key == key) {
+               return node.value;
             }
-            tmp = tmp.next;
+            node = node.next;
         }
         return  null;
     }
-    public Node getNode(K key) { // Hilfsfunktion _> vereinfacht den Wert einer Node zu ändern
-        Node<K, V> tmp = head;
-        while (tmp != null) {
-            if (tmp.key == key) {
-                return tmp;
-            }
-            tmp = tmp.next;
-        }
-        return  null;
-    }
-
-
 
 
     @Override
     public void put(K key, V value) {
        Node node =getNode(key);
-       if(node!=null){                //key ist schon geschbeichert
+       //falls der Schlüssel bereit in der Liste ist , ändern wir nur seinen Value
+       if(node!=null){
            node.value=value;
        }
-
+        // falls nicht!..
         else {
-            if (size == 0) {
-                Node<K, V> tmp1= new Node<K, V>();
-                tmp1.key = key;
-                tmp1.value = value;
-                head = tmp1;
-                tail = tmp1;
-                size++;
-            } else {
-                Node<K, V> tmp1 = new Node<K, V>();
-                tmp1.key = key;
-                tmp1.value = value;
-                tail.next = tmp1;
-                tail = tmp1;
-                size++;
+           Node<K, V> node_x = new Node<K, V>(key,value);
+           if (size == 0) {
+                //falls die Liste Leer ist
+               head = node_x;
+               tail= node_x;
+           } else {
+               tail.next = node_x;
 
-            }
-        }
+           }
+           tail = node_x;
+           size++;
+       }
     }
 
 
@@ -72,20 +64,22 @@ public class ListMap<K ,V>  implements Map<K ,V> {
             Node<K, V> tmp = head;
             if (tmp.key == key) {  // falls key in dem head
                 head = tmp.next;
-                size--;
-            } else {
+            }
+            else {
                 while (tmp.next.key != key) {
                     tmp = tmp.next;
                 }
-                if (tmp.next == tail) { // falls key am Ende
+                // falls der key am Ende ist
+                if (tmp.next == tail) {
                     tail = tmp;
                     tail.next = null;
-                    size--;
-                } else {   // falls key in dazwichen
+                }
+                // falls der key  zwischen head und tail ist
+                else {
                     tmp.next = tmp.next.next;
-                    size--;
                 }
             }
+            size--;
         }
     }
 
@@ -101,13 +95,14 @@ public class ListMap<K ,V>  implements Map<K ,V> {
         if (array == null|| array.length< size()) {
             throw new IllegalArgumentException();
         } else {
-            Node<K, V> tmp = head;
-            int i = 0;
-            while (tmp != null && i < size() ){
-                array[i] = tmp.key;
+            Node<K, V> node = head;
+            int i =0;
+            while (node != null && i < size() ){
+                array[i] = node.key;
                 i++;
-                tmp = tmp.next;
+                node = node.next;
             }
         }
     }
+
 }
