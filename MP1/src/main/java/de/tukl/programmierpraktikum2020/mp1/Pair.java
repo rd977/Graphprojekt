@@ -9,10 +9,6 @@ public class Pair {
         this.sec = sec;
     }
 
-    public void setFirst(String fst) {
-        this.fst = fst;
-    }
-
     public void setSecond(Integer sec) {
         this.sec = sec;
     }
