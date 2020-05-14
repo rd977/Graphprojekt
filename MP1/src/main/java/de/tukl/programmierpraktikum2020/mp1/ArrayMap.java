@@ -15,7 +15,7 @@ public class ArrayMap implements Map<String,Integer>{
     //DIese Funktion Hilft uns
     private int get_Indix(String key){
         for(int i = 0 ; i < size ; i++){
-            if(arr[i].getFirst()== key){
+            if(arr[i].getFirst().equals( key)){
                 return i;
             }
         }
