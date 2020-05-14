@@ -11,7 +11,7 @@ public class ListMap<K ,V>  implements Map<K ,V> {
     public Node getNode(K key) {
         Node<K, V> node = head;
         while (node != null) {
-            if (node.key == key) {
+            if (node.key .equals(key) ) {
                 return node;
             }
             node = node.next;
@@ -23,7 +23,7 @@ public class ListMap<K ,V>  implements Map<K ,V> {
     public V get(K key) {
         Node<K, V> node  = head;
         while (node != null) {
-            if (node.key == key) {
+            if (node.key .equals(key) ) {
                return node.value;
             }
             node = node.next;
@@ -62,7 +62,7 @@ public class ListMap<K ,V>  implements Map<K ,V> {
     public void remove(K key) {
         if (get(key) != null) {     // remove wird duchgefüht nur wenn key in der Liste ist
             Node<K, V> tmp = head;
-            if (tmp.key == key) {  // falls key in dem head
+            if (tmp.key .equals(key)) {  // falls key in dem head
                 head = tmp.next;
             }
             else {
