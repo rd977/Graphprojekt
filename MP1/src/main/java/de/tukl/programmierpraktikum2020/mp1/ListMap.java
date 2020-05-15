@@ -42,16 +42,15 @@ public class ListMap<K ,V>  implements Map<K ,V> {
        }
         // falls nicht!..
         else {
-           Node<K, V> node_x = new Node<K, V>(key,value);
+           Node<K, V> newnode = new Node<K, V>(key,value);
            if (size == 0) {
                 //falls die Liste Leer ist
-               head = node_x;
-               tail= node_x;
+               head = newnode;
            } else {
-               tail.next = node_x;
+               tail.next = newnode;
 
            }
-           tail = node_x;
+           tail = newnode;
            size++;
        }
     }
@@ -63,23 +62,23 @@ public class ListMap<K ,V>  implements Map<K ,V> {
     public void remove(K key) {
         // remove wird duchgefüht nur wenn key in der Liste ist
         if (get(key) != null) {     
-            Node<K, V> tmp = head;
+            Node<K, V> node = head;
             // falls key in dem head Node
-            if (tmp.key .equals(key)) {  
-                head = tmp.next;
+            if (node.key .equals(key)) {  
+                head = node.next;
             }
             else {
-                while (tmp.next.key != key) {
-                    tmp = tmp.next;
+                while (node.next.key != key) {
+                    node = node.next;
                 }
                 // falls der key am Ende ist
-                if (tmp.next == tail) {
-                    tail = tmp;
+                if (node.next == tail) {
+                    tail = node;
                     tail.next = null;
                 }
                 // falls der key  zwischen head und tail ist
                 else {
-                    tmp.next = tmp.next.next;
+                    node.next = node.next.next;
                 }
             }
             size--;
