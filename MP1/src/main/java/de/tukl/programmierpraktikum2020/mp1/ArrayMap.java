@@ -92,7 +92,7 @@ public class ArrayMap implements Map<String,Integer>{
         int indx = get_Indix(key);
         // Um die remove Operation zuführen , muss gesichert sein dass das gelöchende Element im Array sein muss
         if(indx!=-1 ) {
-            for (int j = indx; j < arr.length - 1; j++) { 
+            for (int j = indx; j < size- 1; j++) { 
                 //Löchen geht so , dass das Element überschrieben wird , 
                 //dass heißt , alle Elemente an der linker Seite des Elements werden nach rechts verschoben 
                 arr[j]=arr[j + 1];
