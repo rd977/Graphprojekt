@@ -61,9 +61,11 @@ public class ListMap<K ,V>  implements Map<K ,V> {
 
     @Override
     public void remove(K key) {
-        if (get(key) != null) {     // remove wird duchgefüht nur wenn key in der Liste ist
+        // remove wird duchgefüht nur wenn key in der Liste ist
+        if (get(key) != null) {     
             Node<K, V> tmp = head;
-            if (tmp.key .equals(key)) {  // falls key in dem head
+            // falls key in dem head Node
+            if (tmp.key .equals(key)) {  
                 head = tmp.next;
             }
             else {
