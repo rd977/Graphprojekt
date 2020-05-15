@@ -66,7 +66,7 @@ public class ArrayMap implements Map<String,Integer>{
 
     @Override
     public void put(String key, Integer value) {
-        Pair pair = new Pair(key,value);
+    
         int indx = get_Indix(key);
         //bevor dem Einfügen ,müssen wir sicher sein dass size kleiner als  arr.length sein muss 
         //sonst können wir dass Element nicht einfügen , weil das Array  nicht voll sein muss
@@ -77,6 +77,7 @@ public class ArrayMap implements Map<String,Integer>{
         // falls er nicht in dem Array ist 
         // werden der key und value in neuer Paar geschpeichet und ins Array eingefügt
         if(indx == -1){
+           Pair pair = new Pair(key,value);
            arr[size] =pair;
             size++;
         }
