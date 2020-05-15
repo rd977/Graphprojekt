@@ -54,7 +54,7 @@ public class TreeMap<K, V> implements Map<K, V> {
             node.left = remove_helper(node.left, key);
         }
         // sucht nach dem Knoten mit dem  key in rechten Unterbaum
-        else if (comp.compare(key, node.key) > 0) {
+        else (comp.compare(key, node.key) > 0) {
             node.right = remove_helper(node.right, key);
         }
         //Liefert den ganzen Baum ohne den gelöschten Knoten zurück
