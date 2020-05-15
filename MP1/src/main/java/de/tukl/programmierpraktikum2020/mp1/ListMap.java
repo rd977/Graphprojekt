@@ -7,7 +7,8 @@ public class ListMap<K ,V>  implements Map<K ,V> {
     int size = 0;
 
     //-----------getNode----------------------------//
-    //Gibt das Node des eingegebnen Svhlüssels zurück
+    //Gibt das Node des eingegebnen Schlüssels zurück
+    //die Funktion vereinfacht die Änderung des Value
     public Node getNode(K key) {
         Node<K, V> node = head;
         while (node != null) {
@@ -34,7 +35,7 @@ public class ListMap<K ,V>  implements Map<K ,V> {
 
     @Override
     public void put(K key, V value) {
-       Node node =getNode(key);
+       Node<K,V> node =getNode(key);
        //falls der Schlüssel bereit in der Liste ist , ändern wir nur seinen Value
        if(node!=null){
            node.value=value;
