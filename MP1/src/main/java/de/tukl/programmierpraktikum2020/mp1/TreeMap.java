@@ -33,8 +33,8 @@ public class TreeMap<K, V> implements Map<K, V> {
                 node = node.left;
             }
             else {
-                // falls Parent beide Kinder hat : wir suchen in dem rechten  nach dem Knoten,der den keinsten key hat
-                //wenn wir den linken Unterbaum wählen möchten dann müssen wir  nach dem Knoten,der den  größten key hat
+                // falls Parent beide Kinder hat : wir suchen in dem rechten Unterbaum nach dem Knoten,der den kleinsten key hat
+                //wenn wir den linken Unterbaum wählen möchten dann müssen wir  nach dem Knoten suchen,der den  größten key hat
                 //HIER haben wir uns für den ersten Wahl etnschieden.
                 // Wenn wir den minimum gefunden haben dann tauschen wir den 
                 //Key und Value mit dem Key und dem Value des Root des Unterbaum aus und umgekehrt.  
