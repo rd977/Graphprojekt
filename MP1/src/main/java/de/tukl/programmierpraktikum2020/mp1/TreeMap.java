@@ -1,8 +1,7 @@
 package de.tukl.programmierpraktikum2020.mp1;
 
-
+// alle Operationen haben Laufzeit log(size) wenn der Baum balanciert ist und O(size) wenn nicht
 import java.util.Comparator;
-
 
 public class TreeMap<K, V> implements Map<K, V> {
     TreeNode<K, V> root;
@@ -14,7 +13,7 @@ public class TreeMap<K, V> implements Map<K, V> {
         comp = comparator;
     }
 
-    //------------------removeHelber Funktion ----------------------------------------------//
+    //------------removeHelber Funktion -- ----------------------------------//
 
     private TreeNode<K, V> remove_helper(TreeNode<K, V> node, K key) {
         if (node == null) return null;
