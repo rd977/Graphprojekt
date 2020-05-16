@@ -13,9 +13,9 @@ public class ArrayMap implements Map<String,Integer>{
 
 
 
-    //-----------get_Indix Funktion------------------------------------//
+    //-----------get_Indix Funktion-----------O(size)-------------------------//
     //Diese Funktion gibt den Index der Position des Keys in dem Array
-    private int get_Indix(String key){
+    private int get_Indix(String key){  
         for(int i = 0 ; i < size ; i++){
             if(arr[i].getFirst().equals( key)){
                 return i;
@@ -24,7 +24,7 @@ public class ArrayMap implements Map<String,Integer>{
         //key nicht gefunden
         return -1;
     }
-   //-------------------inc_reaseSize FUnktion--------------------------//
+   //-------------------inc_reaseSize FUnktion-----------O(size)---------------//
     // vergrößert die Länge des Arrays zum Doppel
     //und alle Elemente von dem alten Array in das neuen Array koppiert
     private void inc_reaseSize() {
@@ -35,7 +35,7 @@ public class ArrayMap implements Map<String,Integer>{
         arr = copy_Keys;
 
     }
-    //-------------------dic_reaseSize FUnktion--------------------------//
+    //-------------------dic_reaseSize FUnktion------------O(size)--------------//
     //verkleinert den Länge des Arrays zur Hälfte
     //und alle Elemente von dem alten Array in das neuen Array koppiert
     private void dic_reaseSize() {
@@ -47,7 +47,7 @@ public class ArrayMap implements Map<String,Integer>{
 
     }
 
-    @Override
+    @Override  //O(size)
     public Integer get(String key) {
         //Um den Value aus dem Array  zurückzuliefern 
         //, suchen wir nach dem key mit Hilfe der getFirst Funktion 
@@ -64,7 +64,7 @@ public class ArrayMap implements Map<String,Integer>{
 
 
 
-    @Override
+    @Override //O(size)
     public void put(String key, Integer value) {
     
         int indx = get_Indix(key);
@@ -87,7 +87,7 @@ public class ArrayMap implements Map<String,Integer>{
         }
     }
 
-    @Override
+    @Override //O(size)
     public void remove(String key) {
         int indx = get_Indix(key);
         // Um die remove Operation zuführen , muss gesichert sein dass das gelöchende Element im Array sein muss
@@ -109,12 +109,12 @@ public class ArrayMap implements Map<String,Integer>{
     }
 
 
-    @Override
+    @Override //O(1)
     public int size() {
         return size;
     }
 
-    @Override
+    @Override//O(size)
     public void keys(String[] array) {
         if (array == null|| array.length< size()) {
             throw new IllegalArgumentException();
