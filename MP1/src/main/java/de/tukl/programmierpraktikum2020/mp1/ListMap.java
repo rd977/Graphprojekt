@@ -6,7 +6,7 @@ public class ListMap<K ,V>  implements Map<K ,V> {
     Node<K, V> tail;
     int size = 0;
 
-    //-----------getNode----------------------------//
+    //-----------getNode--------O(size)--------------------//
     //Gibt das Node des eingegebnen Schlüssels zurück
     //die Funktion vereinfacht die Änderung des Value
     public Node getNode(K key) {
@@ -20,7 +20,7 @@ public class ListMap<K ,V>  implements Map<K ,V> {
         return  null;
     }
 
-    @Override
+    @Override //O(size)
     public V get(K key) {
         Node<K, V> node  = head;
         while (node != null) {
@@ -33,7 +33,7 @@ public class ListMap<K ,V>  implements Map<K ,V> {
     }
 
 
-    @Override
+    @Override //O(size) 
     public void put(K key, V value) {
        Node<K,V> node =getNode(key);
        //falls der Schlüssel bereit in der Liste ist , ändern wir nur seinen Value
@@ -58,7 +58,7 @@ public class ListMap<K ,V>  implements Map<K ,V> {
 
 
 
-    @Override
+    @Override //O(size)
     public void remove(K key) {
         // remove wird duchgefüht nur wenn key in der Liste ist
         if (get(key) != null) {     
@@ -85,14 +85,14 @@ public class ListMap<K ,V>  implements Map<K ,V> {
         }
     }
 
-    @Override
+    @Override //O(1)
     public int size() {
         return size;
     }
 
 
 
-    @Override
+    @Override //O(size)
     public void keys(K[] array) {
         if (array == null|| array.length< size()) {
             throw new IllegalArgumentException();
