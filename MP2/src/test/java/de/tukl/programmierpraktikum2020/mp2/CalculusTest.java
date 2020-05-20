@@ -40,16 +40,22 @@ public class CalculusTest {
         sb.add(new FunctionWithRef("x+3", x -> x + 3, x -> 1.0));
         sb.add(new FunctionWithRef("x*x", x -> x * x, x -> 2 * x));
         sb.add(new FunctionWithRef("sin(x)", Math::sin, Math::cos));
-        sb.add(new FunctionWithRef("3/x", x -> 3 / x, x -> -3 / (x * x)));
         //sb.add(new FunctionWithRef("x^2", x -> x*x, x -> 2*x)); // Auswertung der Ableitung ergibt ggf. NaN für x<0
         sb.add(new FunctionWithRef("3.0*x+15*sin(x)", x -> 3.0 * x + 15.0 * Math.sin(x), x -> 3.0 + 15.0 * Math.cos(x)));
         sb.add(new FunctionWithRef("exp(-x*x)", x -> Math.exp(-x * x), x -> -2 * Math.exp(-x * x) * x));
-        sb.add(new FunctionWithRef("sin(x*x)/(x*x)", x -> Math.sin(x * x) / (x * x), x -> (2 * x * x * Math.cos(x * x) - 2 * Math.sin(x * x)) / (x * x * x)));
-        sb.add(new FunctionWithRef("sin(x)+1/3*sin(3*x)+1/5*sin(5*x)+1/7*sin(7*x)+1/9*sin(9*x)+1/11*sin(11*x)", x -> Math.sin(x) + 1 / 3.0 * Math.sin(3 * x) + 1 / 5.0 * Math.sin(5 * x) + 1 / 7.0 * Math.sin(7 * x) + 1 / 9.0 * Math.sin(9 * x) + 1 / 11.0 * Math.sin(11 * x), x -> Math.cos(x) + Math.cos(3 * x) + Math.cos(5 * x) + Math.cos(7 * x) + Math.cos(9 * x) + Math.cos(11 * x)));
-        sb.add(new FunctionWithRef("1/x*1/(x-2)*1/(x-4)*1/(x-6)*1/(x+2)*1/(x+4)*1/(x+6)", x -> 1 / x * 1 / (x - 2) * 1 / (x - 4) * 1 / (x - 6) * 1 / (x + 2) * 1 / (x + 4) * 1 / (x + 6), x -> (2304 - 2352 * Math.pow(x, 2) + 280 * Math.pow(x, 4) - 7 * Math.pow(x, 6)) / (Math.pow(-6 + x, 2) * Math.pow(-4 + x, 2) * Math.pow(-2 + x, 2) * Math.pow(x, 2) * Math.pow(2 + x, 2) * Math.pow(4 + x, 2) * Math.pow(6 + x, 2))));
         sb.add(new FunctionWithRef("sin(x)*cos(20*x)", x -> Math.sin(x) * Math.cos(20 * x), x -> Math.cos(x) * Math.cos(20 * x) - Math.sin(x) * Math.sin(20 * x) * 20));
 
         // Optional parts
+        try {
+            Class.forName(packageName + "." + "Div");
+            sb.add(new FunctionWithRef("3/x", x -> 3 / x, x -> -3 / (x * x)));
+            sb.add(new FunctionWithRef("sin(x*x)/(x*x)", x -> Math.sin(x * x) / (x * x), x -> (2 * x * x * Math.cos(x * x) - 2 * Math.sin(x * x)) / (x * x * x)));
+            sb.add(new FunctionWithRef("sin(x)+1/3*sin(3*x)+1/5*sin(5*x)+1/7*sin(7*x)+1/9*sin(9*x)+1/11*sin(11*x)", x -> Math.sin(x) + 1 / 3.0 * Math.sin(3 * x) + 1 / 5.0 * Math.sin(5 * x) + 1 / 7.0 * Math.sin(7 * x) + 1 / 9.0 * Math.sin(9 * x) + 1 / 11.0 * Math.sin(11 * x), x -> Math.cos(x) + Math.cos(3 * x) + Math.cos(5 * x) + Math.cos(7 * x) + Math.cos(9 * x) + Math.cos(11 * x)));
+            sb.add(new FunctionWithRef("1/x*1/(x-2)*1/(x-4)*1/(x-6)*1/(x+2)*1/(x+4)*1/(x+6)", x -> 1 / x * 1 / (x - 2) * 1 / (x - 4) * 1 / (x - 6) * 1 / (x + 2) * 1 / (x + 4) * 1 / (x + 6), x -> (2304 - 2352 * Math.pow(x, 2) + 280 * Math.pow(x, 4) - 7 * Math.pow(x, 6)) / (Math.pow(-6 + x, 2) * Math.pow(-4 + x, 2) * Math.pow(-2 + x, 2) * Math.pow(x, 2) * Math.pow(2 + x, 2) * Math.pow(4 + x, 2) * Math.pow(6 + x, 2))));
+        } catch (ClassNotFoundException e) {
+            System.out.println("Überspringe Test für optionalen Teil von Aufgabe 1 (Klasse Div).");
+        }
+
         try {
             Class.forName(packageName + "." + "Log");
             sb.add(new FunctionWithRef("log(x*x)", x -> Math.log(x * x), x -> 1 / (x * x) * 2 * x));
