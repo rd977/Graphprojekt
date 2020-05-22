@@ -5,19 +5,18 @@ public class X implements Function {
 
     @Override
     public String toString() {
-        return (x == 1.0) ? ""+ this.x :"x";
+        return "x";
     }
 
     @Override
     public double apply(double x) {
         return x;
+
     }
 
     @Override
     public Function derive() {
-        X c = new X();
-        c.x = 1.0;
-        return c;
+        return new Const(1.0);
     }
     //-----------Test----------------
     public static void main(String[] args){

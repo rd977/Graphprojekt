@@ -1,26 +1,28 @@
 package de.tukl.programmierpraktikum2020.mp2.functions;
 
 public class Const implements Function {
-    public double s;
+    final double number;
 
-    public Const(double c) {
-        this.s = c;
+    public Const(double number) {
+        this.number = number;
     }
 
     @Override
     public String toString() {
-        return (s == 0) ? "0.0" : ""+s;
+        return String.valueOf(number);
     }
 
     @Override
     public double apply(double x) {
-        return s;
+        return number;
     }
 
     @Override
     public Function derive() {
-        return new Const(0);
+        return new Const(0.0);
     }
+
+
 
     //-----------Test----------------
     public static void main(String[] args){

@@ -4,25 +4,25 @@ public class Exp implements Function {
 
     Function f;
 
-    Exp(Function f) {
+    public Exp(Function f) {
         this.f = f;
     }
 
     @Override
     public String toString() {
 
-        return "\"" +"exp(" + f.toString().substring(1, f.toString().length()-1) + "\"";
+        return "exp(" + f.toString()+ ")" ;
     }
 
     @Override
     public double apply(double x) {
-        return Math.exp(x);
+        return Math.exp(f.apply(x));
     }
 
     @Override
     public Function derive() {
 
-        return new Mult(f.derive(), new Exp(f));
+        return new Mult(new Exp(f) , f.derive());
     }
     //-----------Test----------------
     public static void main(String[] args){

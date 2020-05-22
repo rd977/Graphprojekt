@@ -1,28 +1,29 @@
 package de.tukl.programmierpraktikum2020.mp2.functions;
 
 public class Plus implements Function {
-    Function c;
-    Function v;
-    double b;
+    Function f1;
+    Function f2;
 
-    Plus(Function c, Function x) {
-        this.c = c;
-        this.v = x;
+
+    public Plus(Function f1, Function f2) {
+        this.f1 = f1;
+        this.f2 = f2;
     }
 
     @Override
     public String toString() {
-        return "(" + c.toString() + " + " + v.toString() + ")";
+        return  f1 + "+" + f2 ;
     }
 
     @Override
     public double apply(double x) {
-        return c.apply(x) + v.apply(x);
+        return f1.apply(x) + f2.apply(x);
     }
 
     @Override
-    public Function derive() {
-        return new Plus(c.derive(), v.derive());
+    public Function derive()
+    {
+        return new Plus(f1.derive(), f2.derive());
     }
     //-----------Test----------------
     public static void main(String[] args){

@@ -2,17 +2,17 @@ package de.tukl.programmierpraktikum2020.mp2.functions;
 
 
 public class Mult implements Function {
-    Function f1;
-    Function f2;
-
-    Mult(Function f1, Function f2) {
+    public Function f1;
+    public Function f2;
+    boolean v = false;
+    public Mult(Function f1, Function f2) {
         this.f1 = f1;
         this.f2 = f2;
     }
 
     @Override
     public String toString() {
-        return "(" + f1.toString()+ " * " + f2.toString()+")" ;
+        return  "("+f1.toString() + "*"+ f2.toString() + ")"  ;
     }
 
     @Override
@@ -22,12 +22,11 @@ public class Mult implements Function {
 
     @Override
     public Function derive() {
-        if (f1.derive().toString() == "0.0") {
-            return new Mult(f1, f2.derive());
-        } else {
-            return new Mult(f1.derive(), f2.derive());
-        }
+
+            return new Plus(new Mult(f1,f2.derive()), new Mult(f2,f1.derive()));
+
     }
+
     //-----------Test----------------
     public static void main(String[] args){
         Function f = new Mult(new Const(5.0) , new X());

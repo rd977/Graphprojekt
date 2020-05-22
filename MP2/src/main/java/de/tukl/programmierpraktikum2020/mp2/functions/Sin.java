@@ -3,7 +3,7 @@ package de.tukl.programmierpraktikum2020.mp2.functions;
 public class Sin implements Function {
     Function f;
 
-    Sin(Function f) {
+    public Sin(Function f) {
         this.f = f;
     }
 
@@ -15,7 +15,7 @@ public class Sin implements Function {
 
     @Override
     public double apply(double x) {
-        return Math.sin(x);
+        return Math.sin(f.apply(x));
     }
 
     @Override
