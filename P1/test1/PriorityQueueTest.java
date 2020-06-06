@@ -44,14 +44,13 @@ public class PriorityQueueTest {
         assertEquals(11, queue.max());
         assertEquals(11, queue.deleteMax());
         assertEquals(9, queue.max());
-        UnaryOperator<Integer> func1 = x -> x * 2;
-        queue.map(func1);
+        queue.map(x -> x * 2);
         assertEquals(18, queue.max());
     }
 
     @ParameterizedTest
     @MethodSource("getPriorityQueueInstances")
-    public void priorityQueueBeispiel2(PriorityQueue<Integer> queue,PriorityQueue<Integer> queue1) {
+    public void priorityQueueBeispiel2(PriorityQueue<Integer> queue,PriorityQueue<Integer> queue2) {
         System.out.println("Teste priorityQueueBeispiel mit " + queue.getClass().getSimpleName());
 
         // Test: eine frisch initialisierte Queue ist leer
@@ -85,5 +84,5 @@ public class PriorityQueueTest {
 
 
 
-    
+
 }
