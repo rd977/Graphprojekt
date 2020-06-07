@@ -17,7 +17,7 @@ public class PriorityQueueTest {
         List<PriorityQueue<Integer>> implementations = new LinkedList<>();
         // Um Compilefehler zu verhindern, sind die Instanziierungen der PriorityQueue Implementierungen auskommentiert.
         // Kommentieren Sie die Zeilen ein, sobald Sie die entsprechenden Klassen implementiert haben.
-        //implementations.add(new ListQueue<>(Comparator.<Integer>naturalOrder()));
+        implementations.add(new ListQueue<>(Comparator.<Integer>naturalOrder()));
         //implementations.add(new SkewHeap<>(Comparator.<Integer>naturalOrder()));
         //implementations.add(new FibonacciHeap<>(Comparator.<Integer>naturalOrder()));
         return implementations;
@@ -30,8 +30,59 @@ public class PriorityQueueTest {
 
         // Test: eine frisch initialisierte Queue ist leer
         assertTrue(queue.isEmpty());
-
-        // Fügen Sie hier weitere Tests ein.
-        // Sie dürfen auch gerne weitere Test-Methoden erstellen, z.B. priorityQueueBeispiel2 usw.
+        queue.insert(5);
+        queue.insert(2);
+        queue.insert(3);
+        queue.insert(1);
+        queue.insert(4);
+        queue.insert(8);
+        queue.insert(9);
+        queue.insert(12);
+        assertEquals(12, queue.max());
+        queue.update(9, 11);
+        queue.update(12, 6);
+        assertEquals(11, queue.max());
+        assertEquals(11, queue.deleteMax());
+        assertEquals(8, queue.max());
+        queue.map(x -> x * 2);
+        assertEquals(16, queue.max());
     }
+
+    @ParameterizedTest
+    @MethodSource("getPriorityQueueInstances")
+    public void priorityQueueBeispiel2(PriorityQueue<Integer> queue,PriorityQueue<Integer> queue2) {
+        System.out.println("Teste priorityQueueBeispiel mit " + queue.getClass().getSimpleName());
+
+        // Test: eine frisch initialisierte Queue ist leer
+        assertTrue(queue.isEmpty());
+        queue.insert(5);
+        queue.insert(2);
+        queue.insert(3);
+        queue.insert(1);
+        queue.insert(4);
+        queue.insert(8);
+        queue.insert(9);
+        queue.insert(12);
+        assertEquals(12, queue.max());
+        queue.update(9, 11);
+        queue.update(12, 6);
+        assertEquals(11, queue.max());
+        assertEquals(11, queue.deleteMax());
+        assertEquals(9, queue.max());
+        queue2.insert(6);
+        queue2.insert(5);
+        queue2.insert(4);
+        queue2.insert(3);
+        queue2.insert(2);
+        queue2.insert(1);
+        queue2.merge(queue);
+        assertEquals(9, queue2.max());
+
+    }
+
+
+
+
+
+
 }
