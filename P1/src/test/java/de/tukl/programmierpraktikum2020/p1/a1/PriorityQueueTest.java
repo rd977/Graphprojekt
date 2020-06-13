@@ -1,6 +1,9 @@
 package de.tukl.programmierpraktikum2020.p1.a1;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -107,7 +110,7 @@ public class PriorityQueueTest {
         assertEquals(9,queue.max() );
 
     }
-    @ParameterizedTest
+   /* @ParameterizedTest
     @MethodSource("getPriorityQueueInstances")
     public void priorityQueueBeispiel6(PriorityQueue<Integer> queue, PriorityQueue<Integer> queue2) {
         System.out.println("Teste priorityQueueBeispiel mit " + queue.getClass().getSimpleName());
@@ -126,11 +129,10 @@ public class PriorityQueueTest {
         queue2.insert(14);
         queue2.insert(8);
         queue2.insert(20);
-        queue.merge(queue2);
         assertEquals(20,queue.max() );
 
     }
-
+*/
 
 
 
