@@ -95,12 +95,7 @@ public class ListQueue<E> implements PriorityQueue<E> {
     }
 
 
-    public void p() {
-
-        for(int i = 0 ; i < list.size() ; i++){
-           System.out.println(list.get(i));
-        }
-    }
+ 
    /* public static void main(String[] arg){
         ListQueue<Integer> c = new ListQueue<Integer>(Comparator.<Integer>naturalOrder());
         ListQueue<Integer> g= new ListQueue<Integer>(Comparator.<Integer>naturalOrder());
