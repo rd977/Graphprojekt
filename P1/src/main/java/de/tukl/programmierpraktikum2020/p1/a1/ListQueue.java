@@ -1,19 +1,18 @@
 package de.tukl.programmierpraktikum2020.p1.a1;
+
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.function.UnaryOperator;
-import java.util.Comparator;
-
-
 
 public class ListQueue<E> implements PriorityQueue<E> {
-    public LinkedList<E> list=new LinkedList<E>();
     Comparator<E> comp;
+    private LinkedList<E> list=new LinkedList<E>();
 
 
 
-    public ListQueue(Comparator<E> comparator) {
-        comp = comparator;
+    public ListQueue(Comparator<E> comp) {
+        this.comp = comp;
     }
 
     @Override
@@ -24,99 +23,113 @@ public class ListQueue<E> implements PriorityQueue<E> {
         else {
             int i = 0;
             Iterator<E> iterator = list.iterator();
-            while (iterator.hasNext()  ) {
-                if (comp.compare(iterator.next() , elem )< 0)
-                   i++;
-                else
+            while (iterator.hasNext() ) {
+                if (comp.compare(iterator.next() , elem )> 0 ){
+                    i++;
+                }
+                else{
                     break;
+                }
             }
-            list.add(i, elem);}
+            list.add(i, elem);
+
+            }
     }
+
+
     @Override
-    public void merge(PriorityQueue<E> otherQueue){
-        while (otherQueue.isEmpty()==false) {
-            list.add(otherQueue.deleteMax());
-        }
+    public void merge(PriorityQueue<E> otherQueue) {
+    while (!otherQueue.isEmpty()) {
+        insert(otherQueue.deleteMax());
     }
-     public E deleteMax () {
-         if (list.isEmpty()) {
-             return (null);
-         }
+    }
 
-         return (list.removeLast());
-
-     }
     @Override
-    public E max () {
-        if (list.isEmpty()) {
-            return (null);
+    public E deleteMax() {
+        if(list.isEmpty()){
+            return null;
         }
-        Iterator<E> iterator = list.iterator();
-        E a=iterator.next();
-        while (iterator.hasNext()) {
-             a = (iterator.next());
-        }
-        return (a);
+        else{
+            E max = list.getFirst();
+            list.remove(max);
+            return max;
 
+            }
 
     }
+
+    @Override
+    public E max() {
+        return list.getLast();
+    }
+
     @Override
     public boolean isEmpty() {
-        if (list.isEmpty()) {
-            return (true);
-        }
-        else {
-            return (false);
-        }
+        return list.isEmpty();
     }
 
     @Override
-    public boolean update(E elem, E updatedElem){
-        if (elem==updatedElem){
-            return false;
+    public boolean update(E elem, E updatedElem) {
+        boolean updated = false;
+        LinkedList<E> temp = list;
+         for(int i = temp.size()-1; i >=0 ; i--) {
+            if( comp.compare(temp.get(i) , elem )==0 ){
+                list.remove(i);
+                insert(updatedElem);
+                updated = true;
         }
-        int i = 0;
-        if (list.isEmpty()) {
-            return (false);
-        }
+         }
 
-        else if (comp.compare(list.getLast() , elem )<0) {
-
-        }
-        else {
-            while (comp.compare(list.get(i), elem) < 0) {
-                i++;
-            }
-        }
-        if (list.get(i)==elem){
-            list.remove(i);
-        }
-        this.insert(updatedElem);
-        return(true);
-
-
-
+        return updated;
 
     }
+
     @Override
-    public void map(UnaryOperator <E> f){
-        LinkedList<E> list2=new LinkedList<E>();
-        if (list.isEmpty()) {
-            return ;
+    public void map(UnaryOperator<E> f) {
+        LinkedList<E> temp = new LinkedList<E>();
+        while (!list.isEmpty()){
+        temp.add(f.apply(deleteMax()));
         }
-        Iterator<E> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            list2.add(f.apply(iterator.next()));
-        }
-        list=list2;
-        return;
+        list = temp;
 
     }
 
 
+    public void p() {
+
+        for(int i = 0 ; i < list.size() ; i++){
+           System.out.println(list.get(i));
+        }
+    }
+   /* public static void main(String[] arg){
+        ListQueue<Integer> c = new ListQueue<Integer>(Comparator.<Integer>naturalOrder());
+        ListQueue<Integer> g= new ListQueue<Integer>(Comparator.<Integer>naturalOrder());
+        g.insert(1);
+        g.insert(1);
+        c.insert(1);
+        c.insert(2);
+        c.insert(3);
+        c.insert(4);
+        c.insert(1);
+        c.insert(9);
+        c.insert(0);
+        c.insert(5);
+        c.insert(1);
+        c.insert(9);
+        c.insert(9);
+        c.insert(9);
 
 
 
+        c.merge(g);
+        //c.deleteMax();
+        c.update(3,2);
+        c.update(2,3);
+        c.update(9,3);
+        c.p();
+        System.out.println("****************************************");
 
-
+        c.map(x ->x*2);
+        c.p();
+    }*/
 }
