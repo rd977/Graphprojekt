@@ -60,7 +60,7 @@ public class ListQueue<E> implements PriorityQueue<E> {
 
     @Override
     public E max() {
-        return list.getLast();
+        return list.getFirst();
     }
 
     @Override
