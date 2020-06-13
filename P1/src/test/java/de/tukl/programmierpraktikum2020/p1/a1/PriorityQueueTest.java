@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Comparator;
@@ -25,6 +26,15 @@ public class PriorityQueueTest {
         implementations.add(new ListQueue<>(Comparator.<Integer>naturalOrder()));
         //implementations.add(new SkewHeap<>(Comparator.<Integer>naturalOrder()));
         //implementations.add(new FibonacciHeap<>(Comparator.<Integer>naturalOrder()));
+        return implementations;
+    }
+    public static List<Arguments> getTwoPriorityQueueInstances() {
+        List<Arguments> implementations = new LinkedList<>();
+        // Um Compilefehler zu verhindern, sind die Instanziierungen der PriorityQueue Implementierungen auskommentiert.
+        // Kommentieren Sie die Zeilen ein, sobald Sie die entsprechenden Klassen implementiert haben.
+        implementations.add(Arguments.of(new ListQueue<>(Comparator.<Integer>naturalOrder()), new ListQueue<>(Comparator.<Integer>naturalOrder())));
+        //implementations.add(Arguments.of(new SkewHeap<>(Comparator.<Integer>naturalOrder()), new SkewHeap<>(Comparator.<Integer>naturalOrder())));
+        //implementations.add(Arguments.of(new FibonacciHeap<>(Comparator.<Integer>naturalOrder()), new FibonacciHeap<>(Comparator.<Integer>naturalOrder())));
         return implementations;
     }
 
@@ -110,29 +120,32 @@ public class PriorityQueueTest {
         assertEquals(9,queue.max() );
 
     }
-   /* @ParameterizedTest
-    @MethodSource("getPriorityQueueInstances")
-    public void priorityQueueBeispiel6(PriorityQueue<Integer> queue, PriorityQueue<Integer> queue2) {
-        System.out.println("Teste priorityQueueBeispiel mit " + queue.getClass().getSimpleName());
-        //Test : max after merge
 
 
-        queue.insert(0);
-        queue.insert(1);
-        queue.insert(12);
-        queue.insert(3);
-        queue.insert(1);
-        queue.insert(4);
-        queue.insert(2);
-        queue.insert(9);
+    @ParameterizedTest
+    @MethodSource("getTwoPriorityQueueInstances")
+    public void priorityQueueBeispiel2(PriorityQueue<Integer> queue1, PriorityQueue<Integer> queue2) {
+        System.out.println("Teste priorityQueueBeispiel2 mit " + queue1.getClass().getSimpleName() + " und " + queue2.getClass().getSimpleName());
+
+        // Test: merge zweier leerer Queues ist leer
+
+        queue1.insert(0);
+        queue1.insert(1);
+        queue1.insert(12);
+        queue1.insert(3);
+        queue1.insert(1);
+        queue1.insert(4);
+        queue1.insert(2);
+        queue1.insert(9);
         queue2.insert(7);
         queue2.insert(14);
         queue2.insert(8);
         queue2.insert(20);
-        assertEquals(20,queue.max() );
+        queue1.merge(queue2);
+        assertEquals(20,queue1.max() );
 
     }
-*/
+
 
 
 
