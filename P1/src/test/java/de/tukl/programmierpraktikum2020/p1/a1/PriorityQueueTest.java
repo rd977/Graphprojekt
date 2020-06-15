@@ -34,7 +34,7 @@ public class PriorityQueueTest {
         // Kommentieren Sie die Zeilen ein, sobald Sie die entsprechenden Klassen implementiert haben.
         implementations.add(Arguments.of(new ListQueue<>(Comparator.<Integer>naturalOrder()), new ListQueue<>(Comparator.<Integer>naturalOrder())));
         //implementations.add(Arguments.of(new SkewHeap<>(Comparator.<Integer>naturalOrder()), new SkewHeap<>(Comparator.<Integer>naturalOrder())));
-        //implementations.add(Arguments.of(new FibonacciHeap<>(Comparator.<Integer>naturalOrder()), new FibonacciHeap<>(Comparator.<Integer>naturalOrder())));
+        implementations.add(Arguments.of(new FibonacciHeap<>(Comparator.<Integer>naturalOrder()), new FibonacciHeap<>(Comparator.<Integer>naturalOrder())));
         return implementations;
     }
 
