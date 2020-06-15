@@ -6,8 +6,8 @@ import java.util.LinkedList;
 public class FibNode<E>{
 
     E key;
-    FibNode<E> parent ;
-    LinkedList<FibNode<E>> child ;
+    FibNode<E> parent , prev , next , child;
+
     int degree;
     boolean marked ;
     FibNode(E key){
