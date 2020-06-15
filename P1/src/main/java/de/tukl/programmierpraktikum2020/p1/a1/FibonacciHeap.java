@@ -17,17 +17,16 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
         this.comp = comp;
     }
 
-    //*****************HilfsFUnktion*******************
-    public void insertNode(FibNode<E> node) {
+    //###############InsertNode########
+    private void insertNode(FibNode<E> node) {
         rootlist.add(node);
-
     }
-    //********************************
 
+    //############## Binomial ############
     private FibNode<E> Binomial() {
 
-        HashMap<Integer, FibNode<E>> hashroot = new HashMap<Integer, FibNode<E>>();
-        FibNode<E> max = rootlist.get(0);
+        HashMap<Integer, FibNode<E>> degRoots = new HashMap<Integer, FibNode<E>>();
+        FibNode<E> max = rootlist.getFirst();
 
         int i = 0;
 
@@ -36,44 +35,45 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
                     max = rootlist.get(i);
                 }
 
-            if (!hashroot.containsKey(rootlist.get(i).degree)) {
-                hashroot.put(rootlist.get(i).degree, rootlist.get(i));
+            if (!degRoots.containsKey( rootlist.get(i).degree )) {
+                degRoots.put(rootlist.get(i).degree , rootlist.get(i));
                 i++;
             } else {
                 int tempDegree = rootlist.get(i).degree;
-                FibNode sameDegreeTree = hashroot.get(tempDegree);
-                FibNode newTree = mergeEqualTrees(rootlist.get(i), sameDegreeTree);
-                // order of next 2 lines
+                FibNode gleichDeg = degRoots.get(tempDegree);
+                FibNode newTree = UnionZweiBäume(rootlist.get(i) , gleichDeg);
+
+
                 rootlist.set(i, newTree);
-                i = rootlist.indexOf(sameDegreeTree) > i ? i : i - 1;
-                rootlist.remove(sameDegreeTree);
-                hashroot.remove(tempDegree);
+                i = rootlist.indexOf(gleichDeg) > i ? i : i - 1;
+                rootlist.remove(gleichDeg);
+                degRoots.remove(tempDegree);
             }
         }
         return max;
     }
 
-    private FibNode<E> mergeEqualTrees(FibNode<E> f1, FibNode<E> f2) {
+    private FibNode<E> UnionZweiBäume(FibNode<E> FN1, FibNode<E> FN2) {
 
-        if (comp.compare(f1.key,f2.key)>0) {
-                f2.next = f1.child;
-                if (f1.child != null)
-                    f1.child.prev = f2;
-                f1.child = f2 ;
-                f2.prev = null;
-                f2.parent = f1;
-                f1.degree++;
-                return f1;
+        if (comp.compare(FN1.key,FN2.key)>0) {
+                FN2.next = FN1.child;
+                if (FN1.child != null)
+                    FN1.child.prev = FN2;
+                FN1.child = FN2 ;
+                FN2.prev = null;
+                FN2.parent = FN1;
+                FN1.degree++;
+                return FN1;
             } else {
-                f1.next = f2.child;
-                if (f2.child != null){
-                    f2.child.prev = f1;
+                FN1.next = FN2.child;
+                if (FN2.child != null){
+                    FN2.child.prev = FN1;
                 }
-                    f2.child = f1 ;
-                  f1.prev = null;
-                  f1.parent = f2;
-                  f2.degree++;
-            return f2;
+                    FN2.child = FN1 ;
+                  FN1.prev = null;
+                  FN1.parent = FN2;
+                  FN2.degree++;
+            return FN2;
     }}
     @Override
     public void insert(E elem) {
@@ -84,7 +84,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
         if(comp.compare(maxNode.key, node.key) < 0){
             maxNode = node;
         }
-        rootlist.addFirst(node);
+        rootlist.add(node);
         size++;
 
     }
@@ -115,6 +115,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
             FibNode<E> temp = maxNode.child;
             while (temp != null) {
                 temp.parent = null;
+                temp.marked = false;
                 insertNode(temp);
                 temp = temp.next;
                 if (temp != null && temp.prev != null)
@@ -124,7 +125,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
             FibNode<E> n = maxNode;
             rootlist.remove(maxNode);
             maxNode = Binomial();
-
+            size--;
             return n.key;
         }
         }
@@ -154,12 +155,14 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     }
     public static void main(String[] args){
         FibonacciHeap<Integer> f = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
+        FibonacciHeap<Integer> x = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
         f.insert(2);
         f.insert(3);
         f.insert(0);
-        f.insert(8);
-        f.insert(100);
+
+
         System.out.println(f.deleteMax());
+        System.out.println(f.size);
         System.out.println(f.max());
     }
 
