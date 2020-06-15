@@ -110,6 +110,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
             }
             rootlist.remove(maxNode);
             maxNode = Binomial();
+            size--;
             return max.key;
         }
 
