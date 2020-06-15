@@ -55,7 +55,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
 
     private FibNode<E> UnionZweiBäume(FibNode<E> FN1, FibNode<E> FN2) {
 
-        if (comp.compare(FN1.key,FN2.key)>0) {
+        if (comp.compare(FN1.key, FN2.key)>0) {
                 FN2.next = FN1.child;
                 if (FN1.child != null)
                     FN1.child.prev = FN2;
