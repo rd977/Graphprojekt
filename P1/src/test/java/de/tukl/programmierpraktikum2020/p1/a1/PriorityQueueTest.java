@@ -40,8 +40,8 @@ public class PriorityQueueTest {
 
     @ParameterizedTest
     @MethodSource("getPriorityQueueInstances")
-    public void priorityQueueBeispiel(PriorityQueue<Integer> queue) {
-        System.out.println("Teste priorityQueueBeispiel mit " + queue.getClass().getSimpleName());
+    public void isEmptyTest(PriorityQueue<Integer> queue) {
+        System.out.println("Teste isEmpty mit " + queue.getClass().getSimpleName());
 
         // Test: eine frisch initialisierte Queue ist leer
         assertTrue(queue.isEmpty());
@@ -50,9 +50,22 @@ public class PriorityQueueTest {
 
     @ParameterizedTest
     @MethodSource("getPriorityQueueInstances")
-    public void priorityQueueBeispiel2(PriorityQueue<Integer> queue) {
-        System.out.println("Teste priorityQueueBeispiel mit " + queue.getClass().getSimpleName());
-
+    public void insertTest(PriorityQueue<Integer> queue) {
+        System.out.println("Teste insert mit " + queue.getClass().getSimpleName());
+        
+        // Test: insert
+        assertTrue(queue.isEmpty());
+        queue.insert(5);
+        assertTrue(!queue.isEmpty());
+    
+    }
+    
+    
+    @ParameterizedTest
+    @MethodSource("getPriorityQueueInstances")
+    public void maxTest(PriorityQueue<Integer> queue) {
+        System.out.println("Teste max mit " + queue.getClass().getSimpleName());
+        
         // Test: max
         queue.insert(5);
         queue.insert(2);
@@ -63,14 +76,13 @@ public class PriorityQueueTest {
         queue.insert(9);
         queue.insert(12);
         assertEquals(12, queue.max());
-
-
-
     }
+    
+    
     @ParameterizedTest
     @MethodSource("getPriorityQueueInstances")
-    public void priorityQueueBeispiel3(PriorityQueue<Integer> queue) {
-        System.out.println("Teste priorityQueueBeispiel mit " + queue.getClass().getSimpleName());
+    public void updateTest(PriorityQueue<Integer> queue) {
+        System.out.println("Teste Update mit " + queue.getClass().getSimpleName());
 
         //Test : max after Update
         queue.insert(5);
@@ -86,8 +98,8 @@ public class PriorityQueueTest {
     }
     @ParameterizedTest
     @MethodSource("getPriorityQueueInstances")
-    public void priorityQueueBeispiel4(PriorityQueue<Integer> queue) {
-        System.out.println("Teste priorityQueueBeispiel mit " + queue.getClass().getSimpleName());
+    public void mapTest(PriorityQueue<Integer> queue) {
+        System.out.println("Teste map mit " + queue.getClass().getSimpleName());
 
         //Test : max after map
         queue.insert(0);
@@ -104,8 +116,8 @@ public class PriorityQueueTest {
     }
     @ParameterizedTest
     @MethodSource("getPriorityQueueInstances")
-    public void priorityQueueBeispiel5(PriorityQueue<Integer> queue) {
-        System.out.println("Teste priorityQueueBeispiel mit " + queue.getClass().getSimpleName());
+    public void deleteMaxTest(PriorityQueue<Integer> queue) {
+        System.out.println("Teste deleteMax mit " + queue.getClass().getSimpleName());
 
         //Test : deletmax
         queue.insert(0);
@@ -120,15 +132,15 @@ public class PriorityQueueTest {
         assertEquals(9,queue.max() );
 
     }
-
-
+    
+    
     @ParameterizedTest
     @MethodSource("getTwoPriorityQueueInstances")
-    public void priorityQueueBeispiel2(PriorityQueue<Integer> queue1, PriorityQueue<Integer> queue2) {
-        System.out.println("Teste priorityQueueBeispiel2 mit " + queue1.getClass().getSimpleName() + " und " + queue2.getClass().getSimpleName());
-
+    public void mergeTest(PriorityQueue<Integer> queue1, PriorityQueue<Integer> queue2) {
+        System.out.println("Teste merge mit " + queue1.getClass().getSimpleName() + " und " + queue2.getClass().getSimpleName());
+        
         // Test: merge zweier leerer Queues ist leer
-
+        
         queue1.insert(0);
         queue1.insert(1);
         queue1.insert(12);
@@ -143,7 +155,7 @@ public class PriorityQueueTest {
         queue2.insert(20);
         queue1.merge(queue2);
         assertEquals(20,queue1.max() );
-
+        
     }
 
 

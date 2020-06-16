@@ -134,7 +134,10 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     private FibNode<E> Binomial() {
 
         HashMap<Integer, FibNode<E>> degRoots = new HashMap<Integer, FibNode<E>>();
-        FibNode<E> max = rootlist.get(0);
+        if(rootlist.isEmpty()) {
+            return null;
+        }
+        FibNode<E> max = rootlist.get( 0 );
 
         int i = 0;
 
@@ -260,15 +263,28 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
 
     @Override
     public void map(UnaryOperator f) {
-        return;
-
+        FibonacciHeap<E> temp = new FibonacciHeap<E>( comp );
+        while(!(rootlist.isEmpty())){
+            temp.insert((E)f.apply(rootlist.removeFirst().key));
+        }
+        while(!temp.isEmpty()){
+            System.out.println("temp.isEmpty: " + temp.isEmpty());
+            System.out.println("temp.max: " + temp.max());
+            insert( temp.deleteMax() );
+            System.out.println("temp.isEmpty: " + temp.isEmpty());
+        }
+    
     }
     public static void main(String[] args){
+        System.out.println("Hallo");
         FibonacciHeap<Integer> f = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
         FibonacciHeap<Integer> x = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
         f.insert(2);
         f.insert(3);
-        f.insert(0);
+        UnaryOperator<Integer> x2 = a -> a * 2;
+        f.map(x2);
+        System.out.println("f Max = " + f.deleteMax());
+        /*f.insert(0);
         f.insert(5);
        x.insert(1);
         x.insert(7);
@@ -281,7 +297,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
         System.out.println(f.max());
         System.out.println(x.isEmpty());
         FibNode<Integer> a=new FibNode(5);
-        System.out.println(a.next!=null);
+        System.out.println(a.next!=null);*/
     }
 
 }
