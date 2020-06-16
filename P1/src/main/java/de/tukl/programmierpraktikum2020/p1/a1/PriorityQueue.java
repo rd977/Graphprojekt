@@ -11,5 +11,5 @@ public interface PriorityQueue<E> {
     boolean isEmpty();
     boolean update(E elem, E updatedElem);
     void map(UnaryOperator<E> f);
-    LinkedList<FibNode<E>> retlist();
+
 }

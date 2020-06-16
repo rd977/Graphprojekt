@@ -98,9 +98,10 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
 
     @Override
     public void merge(PriorityQueue otherQueue) {
-        int s = otherQueue.retlist().size();
-       while (!otherQueue.retlist().isEmpty()){
-           insertNode((FibNode<E>) otherQueue.retlist().remove());
+        FibonacciHeap<E> queueX = (FibonacciHeap<E>) otherQueue;
+        int s = queueX.size;
+       while (!queueX.rootlist.isEmpty()){
+           insertNode(queueX.rootlist.remove());
        }
         size +=s;
 
@@ -157,10 +158,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
         return false;
     }
 
-    @Override
-    public LinkedList<FibNode<E>> retlist() {
-        return rootlist;
-    }
+
 
     @Override
     public void map(UnaryOperator f) {

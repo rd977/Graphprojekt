@@ -95,6 +95,8 @@ public class ListQueue<E> implements PriorityQueue<E> {
     }
 
 
+
+
  
    /* public static void main(String[] arg){
         ListQueue<Integer> c = new ListQueue<Integer>(Comparator.<Integer>naturalOrder());
