@@ -5,7 +5,6 @@ import java.util.function.UnaryOperator;
 import java.util.zip.CheckedOutputStream;
 
 public class FibonacciHeap<E> implements PriorityQueue<E>{
-    int size=0;
     FibNode<E> maxNode;
     Comparator<E> comp;
     LinkedList<FibNode<E>> rootlist = new LinkedList<>();
@@ -90,7 +89,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
             maxNode = node;
         }
         rootlist.add(node);
-        size++;
 
     }
 
@@ -98,13 +96,9 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
 
     @Override
     public void merge(PriorityQueue otherQueue) {
-
-       int s = ((FibonacciHeap<E>) otherQueue).size;
        while (!((FibonacciHeap<E>) otherQueue).rootlist.isEmpty()){
            insertNode(((FibonacciHeap<E>) otherQueue).rootlist.remove());
        }
-        size +=s;
-
     }
 
 
@@ -113,12 +107,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     public E deleteMax() {
         if(rootlist.isEmpty()){
             return null;
-        }
-        else if(size ==1) {
-            FibNode<E> max = maxNode;
-             rootlist.remove();
-             maxNode = null;
-            return max.key;
 
         }else {
             FibNode<E> temp = maxNode.child;
@@ -134,7 +122,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
             FibNode<E> n = maxNode;
             rootlist.remove(maxNode);
             maxNode = Binomial();
-            size--;
             return n.key;
         }
         }
@@ -150,7 +137,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
 
     @Override
     public boolean isEmpty() {
-        return size==0;
+        return rootlist.isEmpty();
     }
 
     @Override
@@ -178,8 +165,8 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
         f.merge(x);
 
         System.out.println(f.deleteMax());
-        System.out.println(f.size);
         System.out.println(f.max());
+        System.out.println(x.isEmpty());
     }
 
 }
