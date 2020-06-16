@@ -268,15 +268,11 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
             temp.insert((E)f.apply(rootlist.removeFirst().key));
         }
         while(!temp.isEmpty()){
-            System.out.println("temp.isEmpty: " + temp.isEmpty());
-            System.out.println("temp.max: " + temp.max());
             insert( temp.deleteMax() );
-            System.out.println("temp.isEmpty: " + temp.isEmpty());
         }
     
     }
     public static void main(String[] args){
-        System.out.println("Hallo");
         FibonacciHeap<Integer> f = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
         FibonacciHeap<Integer> x = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
         f.insert(2);
