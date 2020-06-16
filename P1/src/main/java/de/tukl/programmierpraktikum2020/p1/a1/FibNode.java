@@ -7,7 +7,6 @@ public class FibNode<E>{
 
     E key;
     FibNode<E> parent , prev , next , child;
-
     int degree;
     boolean marked ;
     FibNode(E key){

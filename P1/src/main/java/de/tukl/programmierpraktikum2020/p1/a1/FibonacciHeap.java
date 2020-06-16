@@ -7,7 +7,6 @@ import java.util.zip.CheckedOutputStream;
 public class FibonacciHeap<E> implements PriorityQueue<E>{
     int size=0;
     FibNode<E> maxNode;
-    FibNode<E> current;
     Comparator<E> comp;
     LinkedList<FibNode<E>> rootlist = new LinkedList<>();
 
@@ -19,6 +18,12 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
 
     //###############InsertNode########
     private void insertNode(FibNode<E> node) {
+        if(rootlist.isEmpty()){
+            maxNode = node;
+        }
+        if(comp.compare(maxNode.key, node.key) < 0){
+            maxNode = node;
+        }
         rootlist.add(node);
     }
 
@@ -26,7 +31,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     private FibNode<E> Binomial() {
 
         HashMap<Integer, FibNode<E>> degRoots = new HashMap<Integer, FibNode<E>>();
-        FibNode<E> max = rootlist.getFirst();
+        FibNode<E> max = rootlist.get(0);
 
         int i = 0;
 
@@ -93,9 +98,12 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
 
     @Override
     public void merge(PriorityQueue otherQueue) {
-        while (!otherQueue.isEmpty()){
-            insert((E) otherQueue.deleteMax());
-        }
+        int s = otherQueue.retlist().size();
+       while (!otherQueue.retlist().isEmpty()){
+           insertNode((FibNode<E>) otherQueue.retlist().remove());
+       }
+        size +=s;
+
     }
 
 
@@ -150,6 +158,11 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     }
 
     @Override
+    public LinkedList<FibNode<E>> retlist() {
+        return rootlist;
+    }
+
+    @Override
     public void map(UnaryOperator f) {
 
     }
@@ -159,7 +172,12 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
         f.insert(2);
         f.insert(3);
         f.insert(0);
-
+        f.insert(5);
+       x.insert(1);
+        x.insert(7);
+        x.insert(5);
+        x.insert(3);
+        f.merge(x);
 
         System.out.println(f.deleteMax());
         System.out.println(f.size);

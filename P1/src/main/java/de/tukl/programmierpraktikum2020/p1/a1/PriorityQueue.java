@@ -1,5 +1,6 @@
 package de.tukl.programmierpraktikum2020.p1.a1;
 
+import java.util.LinkedList;
 import java.util.function.UnaryOperator;
 
 public interface PriorityQueue<E> {
@@ -10,4 +11,5 @@ public interface PriorityQueue<E> {
     boolean isEmpty();
     boolean update(E elem, E updatedElem);
     void map(UnaryOperator<E> f);
+    LinkedList<FibNode<E>> retlist();
 }
