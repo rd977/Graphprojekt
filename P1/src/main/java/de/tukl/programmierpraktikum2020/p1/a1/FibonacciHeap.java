@@ -14,73 +14,89 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     public FibonacciHeap(Comparator<E> comp) {
         this.comp = comp;
     }
-    public boolean fixnode(FibNode<E> f, E element){
+    public  void fixnode(FibNode<E> f, E element){
         // noch nicht klar wie diese implementiert sein
         FibNode<E> c=f.child;
         FibNode<E> c1=f.child;
         boolean b =false;
-        while(c.next!=null){
-            if (comp.compare(c.key,f.key) > 0){
+        while(c!=null){
+            if (comp.compare(c.key,element) > 0){
                 b=true;
                 break;}
-            c=c.next;
-        if (c!=null&(comp.compare(c.key,f.key) <= 0) & !b){
+                c=c.next;}
+        if ( !b){
             f.key=element;
-            return false;
+            if (comp.compare(f.key,maxNode.key) > 0)
+                maxNode=f;
+
 
         }
         else
 
-            while(c1.next!=null){
-                rootlist.add(c);
+            while(c1!=null){
+                c1.parent=null;
+                c1.prev=null;
+                c1.next=null;
+                rootlist.add(c1);
                 c1=c1.next;
             }
-            if (c1!=null)
-                rootlist.add(c1);
-            FibNode<E> a = new FibNode(element);
-            rootlist.add(a);
-            return true;
+            f.child=null;
+            f.key=element;
+            f.degree=0;
 
 
-        }
-        return false;
     }
-    public void toroot(FibNode<E> f, E element,boolean b){
-        FibNode<E> c=f.child;
-        while (true){
-            if (c.key==element){
-                c.prev.next=c.next;
-                if (b){
-                    c.changed=true;}
-                rootlist.add(c);
-                if (f.marked==true)
-                    toroot(f.parent,f.key,false);
-                else
-                    f.marked=true;
-                break;
-            }
-            f=f.next;
+    public void toroot(FibNode<E> f){
+        f.parent.degree-=1;
+        f.prev.next=f.next;
+        f.marked=false;
+        f.prev=null;
+        f.next=null;
+        rootlist.add(f);
+
+
+        if (f.parent.marked==true){
+            f.parent.marked=false;
+            toroot(f.parent);}
+        else{
+            f.parent.marked=true;}
         }
-    }
+
     public boolean search(LinkedList<FibNode<E>> rootlist,E element){
-        for (FibNode<E> f:rootlist){
-            if (comp.compare(f.key,element) == 0){
-                toroot(f.parent,element,true);
-                return true;
+        for (FibNode<E> f:rootlist) {
+            if (comp.compare(f.key, element) == 0) {
+                if (f.parent!=null){
+                    f.parent.degree-=1;}
+                f.prev.next=f.next;
+                f.prev=null;
+                f.next=null;
+                this.rootlist.add(f);
+                fixnode(rootlist.getLast(),element);
+                if (f.parent!=null){
+                    if (f.parent.marked==true)
+                        toroot(f.parent);
+                    else
+                        f.parent.marked=true;
+                    f.parent=null;
+                    return true;}
 
             }
             else if (comp.compare(f.key,element) > 0) {
-                    while (true) {
-                        LinkedList<FibNode<E>> L = new LinkedList<>();
-                        L.add(f);
-                        if (search(L, element) == true)
-                            return (true);
-                        if (f.next!=null)
-                           f=f.next;
+                if (f.child!=null) {
+                    LinkedList<FibNode<E>> L = new LinkedList<>();
+                    FibNode<E> c = f.child;
+                    while (c != null) {
+                        L.add(c);
+                        c = c.next;
 
                     }
+                    if (search(L, element) == true)
+                        return (true);
                 }
             }
+        }
+
+
 
 
 
@@ -214,24 +230,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
 
     @Override
     public boolean update(E elem, E updatedElem) {
-        boolean a=(search(rootlist,elem)); // just add necessary trees to rootlist without changing any values and also
-        boolean b=false;                   // taking care of the new marked one
-        // change key
-        if (a){
-            for (int j=0 ;j<rootlist.size();j++) {
-
-                if (rootlist.get(j).changed)
-                    b=fixnode(rootlist.get(j), updatedElem);
-                    if (b)
-                        rootlist.remove(j);
-            }
-            //fix new max
-         for( FibNode<E> F :rootlist){
-             if (comp.compare(F.key, maxNode.key) > 0)
-                 maxNode= F;
-
-         }
-        }
+        boolean a=(search(rootlist,elem));
          return(a);
 
 
@@ -260,6 +259,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
         x.insert(7);
         x.insert(5);
         x.insert(3);
+        f.update(3,4);
         f.merge(x);
 
         System.out.println(f.deleteMax());
