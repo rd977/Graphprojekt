@@ -237,9 +237,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
 
 
     }
-
-
-
     @Override
     public void map(UnaryOperator f) {
         FibonacciHeap<E> temp = new FibonacciHeap<E>( comp );
