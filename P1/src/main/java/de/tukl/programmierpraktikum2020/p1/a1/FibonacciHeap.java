@@ -172,7 +172,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
            insertNode(((FibonacciHeap<E>) otherQueue).rootlist.remove());
        }
         System.out.println(otherQueue.deleteMax());
-
     }
 
 
@@ -181,7 +180,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     public E deleteMax() {
         if(rootlist.isEmpty()){
             return null;
-
         }else {
             FibNode<E> temp = maxNode.child;
             while (temp != null) {
@@ -245,8 +243,11 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
 
     @Override
     public void map(UnaryOperator f) {
-        return;
-
+        FibonacciHeap<E> temp = new FibonacciHeap<E>( comp );
+        while(!(rootlist.isEmpty())){
+            temp.insert((E)f.apply(rootlist.removeFirst().key));
+        }
+        rootlist = temp.rootlist;
     }
     public static void main(String[] args){
         FibonacciHeap<Integer> f = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
