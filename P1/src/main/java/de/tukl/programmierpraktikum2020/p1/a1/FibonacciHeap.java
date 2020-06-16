@@ -32,7 +32,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
             }
 
         }
-        return(l);
+        return(result);
     }
     public  void fixnode(FibNode<E> f, E element){
         System.out.println("we entered fixnode");
