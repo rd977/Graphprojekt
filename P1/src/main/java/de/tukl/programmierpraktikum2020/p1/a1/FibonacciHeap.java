@@ -14,6 +14,26 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     public FibonacciHeap(Comparator<E> comp) {
         this.comp = comp;
     }
+    public void addchildren(FibNode<E> node,LinkedList<FibNode<E>> l){
+        l.add(node);
+        FibNode<E> c=node.child;
+        while(c!=null){
+            addchildren(c,l);
+            c=c.next;
+        }
+
+    }
+    public LinkedList<FibNode<E>> tolist(LinkedList<FibNode<E>> l){
+        LinkedList<FibNode<E>> result=new LinkedList<>();
+        for (FibNode<E> element:l){
+            result.add(element);
+            if (element.child!=null){
+                addchildren(element,l);
+            }
+
+        }
+        return(l);
+    }
     public  void fixnode(FibNode<E> f, E element){
         System.out.println("we entered fixnode");
         System.out.println(element);
@@ -263,26 +283,32 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
 
     @Override
     public void map(UnaryOperator f) {
-        FibonacciHeap<E> temp = new FibonacciHeap<E>( comp );
-        while(!(rootlist.isEmpty())){
-            temp.insert((E)f.apply(rootlist.removeFirst().key));
+        LinkedList<FibNode<E>> l =tolist(rootlist);
+        for (FibNode<E> element:l){
+            E a=element.key;
+            f.apply(a);
+            update(element.key,a);
         }
-        while(!temp.isEmpty()){
-            insert( temp.deleteMax() );
-        }
-    
     }
     public static void main(String[] args){
         FibonacciHeap<Integer> f = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
         FibonacciHeap<Integer> x = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
         f.insert(2);
         f.insert(3);
-        UnaryOperator<Integer> x2 = a -> a * 2;
-        f.map(x2);
-        System.out.println("f Max = " + f.deleteMax());
-        /*f.insert(0);
+        f.insert(0);
         f.insert(5);
-       x.insert(1);
+        f.insert(
+                7
+        );
+        f.insert(8);
+        f.insert(9);
+        f.insert(10);
+        f.deleteMax();
+        for (FibNode<Integer> i:f.rootlist){
+            System.out.println(i.key);
+            System.out.println(i.degree);
+        }
+        x.insert(1);
         x.insert(7);
         x.insert(5);
         x.insert(3);
@@ -293,7 +319,8 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
         System.out.println(f.max());
         System.out.println(x.isEmpty());
         FibNode<Integer> a=new FibNode(5);
-        System.out.println(a.next!=null);*/
+        System.out.println(a.next!=null);
     }
+
 
 }
