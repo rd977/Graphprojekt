@@ -10,7 +10,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     FibNode<E> vater;
     int size =0;
     Comparator<E> comp;
-    boolean found = false;
     LinkedList<FibNode<E>> rootlist = new LinkedList<>();
 
 
@@ -149,6 +148,13 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     }
 
     //-------------- SearchNachElement----------------------
+    private void updateMax(){
+        for(FibNode<E> i : rootlist){
+            if(comp.compare(i.key,maxNode.key)>0){
+                maxNode = i;
+            }
+        }
+    }
     private FibNode<E> find (E elem){
         foundNode = null;
         vater=null;
@@ -162,28 +168,46 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     }
 
     private void updateElem(FibNode<E> node, E updateElem) {
+        E value = node.key;
         node.key = updateElem;
-        FibNode<E> Vater = node.parent;
-        if (Vater != null && comp.compare(node.key, Vater.key) < 0) {
-            cut(node, Vater);
-            fix_after_cut(Vater);
+        if(vater==null){
+            if(comp.compare(node.key , value) >= 0){
+                return;
+            }
+            else {
+                if(node.child.isEmpty()){
+                    updateMax();
+                }
+                else {
+                    while (!node.child.isEmpty()) {
+                        cut(node.child.remove(), node);
+                    }
+
+                }
+            }
         }
-        if (comp.compare(node.key, maxNode.key) > 0)
-            maxNode = node;
+        if (vater != null && comp.compare(node.key, vater.key) > 0) {
+            int i = vater.child.indexOf(node);
+            cut(node.child.remove(i), vater);
+            fix_after_cut(vater);
+        }
+
     }
 
     private void cut(FibNode<E> child, FibNode<E> Vater) {
         Vater.degree--;
         child.parent=null;
         child.marked = false;
-        int i = Vater.child.indexOf(child);
-        insertNode(Vater.child.remove(i));
+        insertNode(child);
+
+
     }
     private void fix_after_cut(FibNode<E> y) {
         FibNode<E> z = y.parent;
         if (z != null) {
-            if (y.marked == false)
-                y.marked=true;
+            if (y.marked == false) {
+                y.marked = true;
+            }
             else {
                 cut(y, z);
                 fix_after_cut(z);
@@ -193,6 +217,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     @Override
     public boolean update(E elem, E updatedElem) {
         FibNode<E> x = find(elem);
+
         if (x != null) {
             updateElem(x, updatedElem);
             return true;
@@ -215,7 +240,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
 
     }
 
-   /* public static void main(String[] args){
+    public static void main(String[] args){
         FibonacciHeap<Integer> g = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
         FibonacciHeap<Integer> x = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
       //  f.insert(2);
@@ -223,21 +248,24 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
        // UnaryOperator<Integer> x2 = a -> a * 2;
        // f.map(x2);
        // System.out.println("f Max = " + f.deleteMax());
-        g.insert(8);
-        g.insert(6);
-       x.insert(1);
-        x.insert(3);
-        x.insert(2);
+
         x.insert(5);
-        x.insert(6);
-        x.merge(g);
-       // x.map(c->c*2);
-       // System.out.println(x.deleteMax());
+        x.insert(2);
+        x.insert(3);
+        x.insert(1);
+        x.insert(4);
+        x.insert(8);
+        x.insert(9);
+        x.insert(12);
+        x.update(9, 11);
+       x.update(12, 6);
+        x.map(c->c*2);
+       System.out.println(x.deleteMax());
 
       //System.out.println(x.rootlist.size());
-       // System.out.println(x.max());
+       System.out.println(x.max());
       //  FibNode<Integer> a=new FibNode(5);
-      //  System.out.println(a.next!=null);
-    }*/
+        System.out.println(x.maxNode.key);
+    }
 
 }
