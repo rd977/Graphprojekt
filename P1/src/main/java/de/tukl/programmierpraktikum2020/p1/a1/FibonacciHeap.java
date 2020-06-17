@@ -13,13 +13,9 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     Comparator<E> comp;
     LinkedList<FibNode<E>> rootlist = new LinkedList<>();
 
-
-
     public FibonacciHeap(Comparator<E> comp) {
         this.comp = comp;
     }
-
-
 //---------------insert------------------------------------------
 // --------------insertNord-------------
 // Hilft beim Einfügen von childern in rootlist
@@ -29,10 +25,9 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
            }
     if(comp.compare(maxNode.key, node.key) < 0){
         maxNode = node;
-         }
+    }
     rootlist.add(node);
 }
-
     @Override
     public void insert(E elem) {
         FibNode<E> node = new FibNode<>(elem);
@@ -44,10 +39,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
         }
         rootlist.add(node);
         size++;
-
     }
-
-
 //------------------------------merge--------------------------------------
     @Override
     public void merge(PriorityQueue otherQueue) {
@@ -55,7 +47,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
            insertNode(((FibonacciHeap<E>) otherQueue).rootlist.remove());
        }
     }
-
 //------------------------deletMax----------------------------------------------------------
     //------------------------DELETMAX------------------------------------------------------
     //----------------- Binomoial ----------------
@@ -66,7 +57,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
         if(rootlist.isEmpty()) {
             return null;
         }
-
         FibNode<E> max = rootlist.getFirst();
         int i = 0;
 
@@ -90,7 +80,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
         }
         return max;
     }
-
     //------------------ mergTowtrees------------------------------
     // Hilfsfunktion bei Binomial Funktion
     private FibNode<E> mergTowtrees(FibNode<E> FiboNode1, FibNode<E> FiboNode2) {
@@ -125,16 +114,12 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     public E max() {
         return maxNode.key;
     }
-  
-
     @Override
     public boolean isEmpty() {
         return rootlist.isEmpty();
     }
-
     //------------------------------------update-----------------------------------------------------
     //------------------------------------UPDATE-----------------------------------------------------
-
     //-----------HilfsFunktionBeimSuchen
     private void findeNode(FibNode<E> node, E elem) {
         if(comp.compare(node.key , elem) == 0 ){
@@ -147,7 +132,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
             }
         }
     }
-
     //-------------- SearchNachElement----------------------
     private void updateMax(){
         for(FibNode<E> i : rootlist){
@@ -167,7 +151,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
         }
         return foundNode;
     }
-
     private void updateElem(FibNode<E> node, E updateElem) {
         E value = node.key;
         node.key = updateElem;
@@ -183,7 +166,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
                     while (!node.child.isEmpty()) {
                         cut(node.child.remove(), node);
                     }
-
                 }
             }
         }
@@ -192,16 +174,12 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
             cut(vater.child.remove(i), vater);
             fix_after_cut(vater);
         }
-
     }
-
     private void cut(FibNode<E> child, FibNode<E> Vater) {
         Vater.degree--;
         child.parent=null;
         child.marked = false;
         insertNode(child);
-
-
     }
     private void fix_after_cut(FibNode<E> y) {
         FibNode<E> z = y.parent;
@@ -218,14 +196,11 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     @Override
     public boolean update(E elem, E updatedElem) {
         FibNode<E> x = find(elem);
-
         if (x != null) {
             updateElem(x, updatedElem);
             return true;
         }
-
          return false;
-
     }
 //---------------------map------------------------------------------
     private void mapNode(FibNode<E> node ,UnaryOperator<E> f ) {
@@ -251,9 +226,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
             System.out.println("--");
             print(eFibNode);
         }
-
     }
-
     public static void main(String[] args){
         FibonacciHeap<Integer> g = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
         FibonacciHeap<Integer> x = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
@@ -262,7 +235,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
        // UnaryOperator<Integer> x2 = a -> a * 2;
        // f.map(x2);
        // System.out.println("f Max = " + f.deleteMax());
-
         g.insert(5);
         g.insert(2);
         g.insert(3);
