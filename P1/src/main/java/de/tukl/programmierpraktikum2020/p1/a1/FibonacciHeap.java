@@ -20,9 +20,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
     }
 
 
-
-
-
 //---------------insert------------------------------------------
 // --------------insertNord-------------
 // Hilft beim Einfügen von childern in rootlist
@@ -59,10 +56,8 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
        }
     }
 
-
 //------------------------deletMax----------------------------------------------------------
     //------------------------DELETMAX------------------------------------------------------
-
     //----------------- Binomoial ----------------
     // alle Bäume die gleichen Degree haben , werden zusammengesetzt
     //gibt auch den neuen Max zurück
@@ -126,10 +121,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
             return max.key;
         }
         }
-
-
-
-
     @Override
     public E max() {
         return maxNode.key;
@@ -209,10 +200,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
 
          return false;
 
-
     }
-
-
 //---------------------map------------------------------------------
     private void mapNode(FibNode<E> node ,UnaryOperator<E> f ) {
         update(node.key ,(E)f.apply(node.key) );
@@ -226,7 +214,6 @@ public class FibonacciHeap<E> implements PriorityQueue<E>{
         }
 
     }
-
 
    /* public static void main(String[] args){
         FibonacciHeap<Integer> g = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
