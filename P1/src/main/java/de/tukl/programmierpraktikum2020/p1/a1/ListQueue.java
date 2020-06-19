@@ -86,11 +86,10 @@ public class ListQueue<E> implements PriorityQueue<E> {
 
     @Override
     public void map(UnaryOperator<E> f) {
-        LinkedList<E> temp = new LinkedList<E>();
-        while (!list.isEmpty()){
-        temp.add(f.apply(deleteMax()));
+        for (E eFibNode : list) {
+            int i = list.indexOf(eFibNode);
+            list.set(i,f.apply(eFibNode)) ;
         }
-        list = temp;
 
     }
 
