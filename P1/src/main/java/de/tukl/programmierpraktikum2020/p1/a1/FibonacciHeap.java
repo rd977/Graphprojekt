@@ -56,12 +56,12 @@ public class FibonacciHeap<E> implements PriorityQueue<E> {
 
     // --------------------------merge--------------------------------------
     @Override
-    public void merge(PriorityQueue otherQueue) {
-        int sizeOfotherQueue = ((FibonacciHeap<E>) otherQueue).rootlist.size();
+    public void merge(PriorityQueue<E> otherQueue) {
+        int otherQueueSize = ((FibonacciHeap<E>) otherQueue).rootlist.size();
         while (!((FibonacciHeap<E>) otherQueue).rootlist.isEmpty()) {
             insertNode(((FibonacciHeap<E>) otherQueue).rootlist.remove());
         }
-        size += sizeOfotherQueue;
+        size += otherQueueSize;
     }
 
 //  Queue1/size=7                                         Queue2/size = 9
@@ -346,30 +346,25 @@ public class FibonacciHeap<E> implements PriorityQueue<E> {
     }
 
     private void updateElem(FibNode<E> node, E updateElem) {
-        E value = node.key;
         node.key = updateElem;
         if (vater == null) {
             if (!node.child.isEmpty() && moveChild(node)) {
                 while (!node.child.isEmpty()) {
                     cut(node.child.removeFirst(), node);
                 }
-                updateMax();
-            } else {
-                updateMax();
             }
+            updateMax();
         } else {
             if (comp.compare(node.key, vater.key) > 0) {
                 int i = vater.child.indexOf(node);
                 cut(vater.child.remove(i), vater);
                 fix_after_cut(vater);
-            } else if (( moveChild(node))) {
+            } else if ((moveChild(node))) {
                 while (!node.child.isEmpty()) {
                     cut(node.child.removeFirst(), node);
                 }
             }
         }
-
-
     }
 
     private void cut(FibNode<E> child, FibNode<E> Vater) {
@@ -415,7 +410,7 @@ public class FibonacciHeap<E> implements PriorityQueue<E> {
     }
 
 
-/* private void print(FibNode<E> node) {
+ /*private void print(FibNode<E> node) {
         System.out.println(node.key);
         for (int i = 0; i < node.degree; i++) {
             print(node.child.get(i));
@@ -432,6 +427,15 @@ public class FibonacciHeap<E> implements PriorityQueue<E> {
 
     public static void main(String[] args) {
         FibonacciHeap<Integer> queue = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
+        queue.insert( 2 );
+        queue.insert( 93 );
+        queue.insert( 91 );
+        queue.insert( 90 );
+        queue.insert( 88 );
+
+
+        //Tests für Update von ELemente die in der Queue nicht vorhand
+        queue.deleteMax();
 
         queue.printRoot();
     }*/
