@@ -1,9 +1,5 @@
 package de.tukl.programmierpraktikum2020.p1.a1;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,8 +8,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PriorityQueueTest {
     /**
@@ -81,7 +76,7 @@ public class PriorityQueueTest {
 
 
         queue.insert(5);
-        assertTrue(!queue.isEmpty());
+        assertFalse(queue.isEmpty());
 
     }
     
@@ -115,7 +110,7 @@ public class PriorityQueueTest {
     public void deletMax(PriorityQueue<Integer> queue) {
         System.out.println("Teste max mit " + queue.getClass().getSimpleName());
         // deletMax mit einer leeren rootliste
-        assertEquals(null , queue.deleteMax());
+        assertNull(queue.deleteMax());
 
     }
     
@@ -143,9 +138,9 @@ public class PriorityQueueTest {
 
         //Tests für Update von ELemente die in der Queue nicht vorhand
         assertEquals(93,queue.deleteMax());
-        assertTrue(!queue.update(44, 15));
-        assertTrue(!queue.update(-6, 47));
-        assertTrue(!queue.update(0, 47));
+        assertFalse(queue.update(44, 15));
+        assertFalse(queue.update(-6, 47));
+        assertFalse(queue.update(0, 47));
 
 
     }
@@ -165,7 +160,7 @@ public class PriorityQueueTest {
         assertTrue(queue.update(91, 2));
         assertTrue(queue.update(90, 7));
         assertTrue(queue.update(3, 0));
-        assertTrue(!queue.update(-6, 47));
+        assertFalse(queue.update(-6, 47));
     }
     @ParameterizedTest
     @MethodSource("getPriorityQueueInstances")
@@ -516,9 +511,9 @@ public class PriorityQueueTest {
     public void IterdeletmaxLEER(PriorityQueue<Integer> queue) {
         System.out.println("Teste deleteMax mit " + queue.getClass().getSimpleName());
         assertTrue(queue.isEmpty());
-        assertEquals (null,queue.deleteMax());
+        assertNull(queue.deleteMax());
         queue.insert(1);
-        assertTrue(!queue.isEmpty());
+        assertFalse(queue.isEmpty());
     }
     @ParameterizedTest
     @MethodSource("getPriorityQueueInstances")
