@@ -407,10 +407,15 @@ public class FibonacciHeap<E> implements PriorityQueue<E> {
         }
         rootlist = temp;
         maxNode = rootlist.getFirst();
+        if(comp.compare(rootlist.getFirst().key,rootlist.getLast().key)<0){
+            updateMax();
+        }
+
     }
 
 
- /*private void print(FibNode<E> node) {
+
+    private void print(FibNode<E> node) {
         System.out.println(node.key);
         for (int i = 0; i < node.degree; i++) {
             print(node.child.get(i));
@@ -425,18 +430,27 @@ public class FibonacciHeap<E> implements PriorityQueue<E> {
 
     }
 
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
         FibonacciHeap<Integer> queue = new FibonacciHeap<>(Comparator.<Integer>naturalOrder());
+        queue.insert( 2 );
+        queue.insert( 93 );
+        queue.insert( 91 );
         queue.insert( 2 );
         queue.insert( 93 );
         queue.insert( 91 );
         queue.insert( 90 );
         queue.insert( 88 );
 
+        queue.insert( 90 );
+        queue.insert( 88 );
+
+
+
 
         //Tests für Update von ELemente die in der Queue nicht vorhand
         queue.deleteMax();
-
+       queue.map(x->x*(-2));
+        System.out.println("max is " +queue.deleteMax());
         queue.printRoot();
     }*/
 }
