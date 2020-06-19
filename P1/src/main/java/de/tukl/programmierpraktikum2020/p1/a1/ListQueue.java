@@ -17,21 +17,16 @@ public class ListQueue<E> implements PriorityQueue<E> {
     public void insert(E elem) {
         if (list.isEmpty()) {
             list.add(elem);
-        } else {
+        }
+        else {
             int i = 0;
-            for (E e : list) {
-                if (comp.compare(e, elem) > 0) {
-                    i++;
-                } else {
-                    break;
-                }
+            while (i <= list.size()-1 && comp.compare(list.get(i), elem) > 0) {
+                i++;
             }
             list.add(i, elem);
-
         }
+
     }
-
-
     @Override
     public void merge(PriorityQueue<E> otherQueue) {
         while (!otherQueue.isEmpty()) {
@@ -70,18 +65,16 @@ public class ListQueue<E> implements PriorityQueue<E> {
     @Override
     public boolean update(E elem, E updatedElem) {
         boolean updated = false;
-        LinkedList<E> temp = list;
-        for (int i = temp.size() - 1; i >= 0; i--) {
-            if (comp.compare(temp.get(i), elem) == 0) {
-                list.remove(i);
+        for (E e : list) {
+            if(comp.compare(e, elem) == 0){
+                list.remove(e);
                 insert(updatedElem);
                 updated = true;
+                break;
             }
-        }
-
+            }
         return updated;
-
-    }
+        }
 
     @Override
     public void map(UnaryOperator<E> f) {
@@ -93,7 +86,7 @@ public class ListQueue<E> implements PriorityQueue<E> {
 
     }
 
-  /*  public void p() {
+ /*   public void p() {
 
         for (E e : list) {
             System.out.println(e);
@@ -103,7 +96,7 @@ public class ListQueue<E> implements PriorityQueue<E> {
 
 
 
-   /* public static void main(String[] arg){
+    public static void main(String[] arg){
         ListQueue<Integer> c = new ListQueue<Integer>(Comparator.<Integer>naturalOrder());
         ListQueue<Integer> g= new ListQueue<Integer>(Comparator.<Integer>naturalOrder());
 
@@ -121,11 +114,11 @@ public class ListQueue<E> implements PriorityQueue<E> {
         c.insert(9);
 
 
-        System.out.println("****************************************");
-        System.out.println(c.list.size());
-        c.map(x ->x*-2);
-        System.out.println(c.list.size());
-        System.out.println("the max " + c.max());
+       // System.out.println("****************************************");
+      //  System.out.println(c.list.size());
+      //  c.map(x ->x*-2);
+        //System.out.println(c.list.size());
+       // System.out.println("the max " + c.max());
         c.p();
     }*/
 }

@@ -1,6 +1,5 @@
 package de.tukl.programmierpraktikum2020.p1.a1;
 
-import java.util.LinkedList;
 import java.util.function.UnaryOperator;
 
 public interface PriorityQueue<E> {
