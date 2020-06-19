@@ -76,8 +76,7 @@ public class ListQueue<E> implements PriorityQueue<E> {
             if( comp.compare(temp.get(i) , elem )==0 ){
                 list.remove(i);
                 insert(updatedElem);
-                updated = true;
-        }
+                updated = true; }
          }
 
         return updated;
