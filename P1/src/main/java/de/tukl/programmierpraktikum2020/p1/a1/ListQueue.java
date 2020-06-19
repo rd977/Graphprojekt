@@ -1,14 +1,12 @@
 package de.tukl.programmierpraktikum2020.p1.a1;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.function.UnaryOperator;
 
 public class ListQueue<E> implements PriorityQueue<E> {
     Comparator<E> comp;
-    private LinkedList<E> list=new LinkedList<E>();
-
+    private LinkedList<E> list = new LinkedList<>();
 
 
     public ListQueue(Comparator<E> comp) {
@@ -16,51 +14,52 @@ public class ListQueue<E> implements PriorityQueue<E> {
     }
 
     @Override
-    public void insert(E elem){
+    public void insert(E elem) {
         if (list.isEmpty()) {
             list.add(elem);
-        }
-        else {
+        } else {
             int i = 0;
-            Iterator<E> iterator = list.iterator();
-            while (iterator.hasNext() ) {
-                if (comp.compare(iterator.next() , elem )> 0 ){
+            for (E e : list) {
+                if (comp.compare(e, elem) > 0) {
                     i++;
-                }
-                else{
+                } else {
                     break;
                 }
             }
             list.add(i, elem);
 
-            }
+        }
     }
 
 
     @Override
     public void merge(PriorityQueue<E> otherQueue) {
-    while (!otherQueue.isEmpty()) {
-        insert(otherQueue.deleteMax());
-    }
+        while (!otherQueue.isEmpty()) {
+            insert(otherQueue.deleteMax());
+        }
     }
 
     @Override
     public E deleteMax() {
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             return null;
-        }
-        else{
-            E max = list.getFirst();
+        } else {
+            E max = max();
             list.remove(max);
             return max;
 
-            }
+        }
 
     }
 
     @Override
     public E max() {
-        return list.getFirst();
+        if (comp.compare(list.getFirst(), list.getLast()) > 0) {
+          return list.getFirst();
+        } else {
+           return list.getLast();
+        }
+
     }
 
     @Override
@@ -72,12 +71,13 @@ public class ListQueue<E> implements PriorityQueue<E> {
     public boolean update(E elem, E updatedElem) {
         boolean updated = false;
         LinkedList<E> temp = list;
-         for(int i = temp.size()-1; i >=0 ; i--) {
-            if( comp.compare(temp.get(i) , elem )==0 ){
+        for (int i = temp.size() - 1; i >= 0; i--) {
+            if (comp.compare(temp.get(i), elem) == 0) {
                 list.remove(i);
                 insert(updatedElem);
-                updated = true; }
-         }
+                updated = true;
+            }
+        }
 
         return updated;
 
@@ -85,22 +85,28 @@ public class ListQueue<E> implements PriorityQueue<E> {
 
     @Override
     public void map(UnaryOperator<E> f) {
-        for (E eFibNode : list) {
-            int i = list.indexOf(eFibNode);
-            list.set(i,f.apply(eFibNode)) ;
+        LinkedList<E> temp = new LinkedList<>();
+        while (!list.isEmpty()) {
+            temp.add(f.apply(deleteMax()));
         }
+        list = temp;
 
+    }
+
+  /*  public void p() {
+
+        for (E e : list) {
+            System.out.println(e);
+        }
     }
 
 
 
 
- 
    /* public static void main(String[] arg){
         ListQueue<Integer> c = new ListQueue<Integer>(Comparator.<Integer>naturalOrder());
         ListQueue<Integer> g= new ListQueue<Integer>(Comparator.<Integer>naturalOrder());
-        g.insert(1);
-        g.insert(1);
+
         c.insert(1);
         c.insert(2);
         c.insert(3);
@@ -115,16 +121,11 @@ public class ListQueue<E> implements PriorityQueue<E> {
         c.insert(9);
 
 
-
-        c.merge(g);
-        //c.deleteMax();
-        c.update(3,2);
-        c.update(2,3);
-        c.update(9,3);
-        c.p();
         System.out.println("****************************************");
-
-        c.map(x ->x*2);
+        System.out.println(c.list.size());
+        c.map(x ->x*-2);
+        System.out.println(c.list.size());
+        System.out.println("the max " + c.max());
         c.p();
     }*/
 }
