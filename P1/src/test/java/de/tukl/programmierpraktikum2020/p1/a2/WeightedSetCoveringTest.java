@@ -21,39 +21,43 @@ public class WeightedSetCoveringTest {
     public void weightedSetBeispiel(PriorityQueue<WeightedSet<Integer>> queue) {
         System.out.println("Teste weightedSetBeispiel mit " + queue.getClass().getSimpleName());
         Comparator <WeightedSet <Integer >> cw;
-        cw = Comparator . comparingDouble ( WeightedSet :: getWeight );
-        queue = new  ListQueue  <>(cw.reversed ());
+        cw = Comparator.comparingDouble ( WeightedSet :: getWeight );
+        queue = new FibonacciHeap<>(cw.reversed ());
+
+
         Set<Integer> targetset=new HashSet<>();
         targetset.add(1);
         targetset.add(2);
         targetset.add(3);
         targetset.add(4);
         targetset.add(5);
-        Set<Integer> b1=new HashSet<>();
-        b1.add(1);
-        b1.add(2);
-        Set<Integer> b2=new HashSet<>();
-        b2.add(1);
-        b2.add(3);
-        Set<Integer> b3=new HashSet<>();
-        b3.add(2);
-        b3.add(3);
-        b3.add(5);
-        Set<Integer> b4=new HashSet<>();
-        b4.add(4);
-        Set<Integer> b5=new HashSet<>();
-        b5.add(1);
-        b5.add(5);
-        Set<Integer> b6=new HashSet<>();
-        b6.add(2);
-        b6.add(3);
-        b6.add(4);
-        Bundle bundl1=new Bundle("Bundle1",1,b1);
-        Bundle bundl2=new Bundle("Bundle2",2,b2);
-        Bundle bundl3=new Bundle("Bundle3",10,b3);
-        Bundle bundl4=new Bundle("Bundle4",3,b4);
-        Bundle bundl5=new Bundle("Bundle5",4,b5);
-        Bundle bundl6=new Bundle("Bundle6",10,b6);
+        Set<Integer> subset1=new HashSet<>();
+        subset1.add(1);
+        subset1.add(2);
+        Set<Integer> subset2=new HashSet<>();
+        subset2.add(1);
+        subset2.add(3);
+        Set<Integer> subset3=new HashSet<>();
+        subset3.add(2);
+        subset3.add(3);
+        subset3.add(5);
+        Set<Integer> subset4=new HashSet<>();
+        subset4.add(4);
+        Set<Integer> subset5=new HashSet<>();
+        subset5.add(1);
+        subset5.add(5);
+        Set<Integer> subset6=new HashSet<>();
+        subset6.add(1);
+        subset6.add(2);
+        subset6.add(3);
+        subset6.add(4);
+        subset6.add(5);
+        Bundle bundl1=new Bundle("Bundle1",1,subset1);
+        Bundle bundl2=new Bundle("Bundle2",2,subset2);
+        Bundle bundl3=new Bundle("Bundle3",10,subset3);
+        Bundle bundl4=new Bundle("Bundle4",3,subset4);
+        Bundle bundl5=new Bundle("Bundle5",4,subset5);
+        Bundle bundl6=new Bundle("Bundle6",10,subset6);
         Set<Bundle> familyOfSets=new HashSet<>();
         familyOfSets.add(bundl1);
         familyOfSets.add(bundl2);
@@ -61,30 +65,218 @@ public class WeightedSetCoveringTest {
         familyOfSets.add(bundl4);
         familyOfSets.add(bundl5);
         familyOfSets.add(bundl6);
-        WeightedSetCovering ws = new WeightedSetCovering(targetset,familyOfSets,queue);
-        Set<Bundle> result1= ws.greedyWeightedCover();
-        Set<Bundle> result=new HashSet<>();
-        result.add(bundl1);
-        result.add(bundl2);
-        result.add(bundl4);
-        result.add(bundl5);
-        // diese ist nur erforderlich in diese fall( mit loschung der features)
-        Set<String> names= new HashSet<>();
-        Set<String> names1= new HashSet<>();
-        Iterator<Bundle> itr = result.iterator();
-        while(itr.hasNext()){
-            names.add((itr.next().name));
+//-----------------------------------------------------------------------------------------
+        WeightedSetCovering cover = new WeightedSetCovering(targetset , familyOfSets , queue);
+        Set<WeightedSet<Integer>> coverset = cover.greedyWeightedCover();
+
+        Set<Integer> set =new HashSet<>();
+        double cost = 0;
+        for( WeightedSet<Integer> i : coverset){
+            set.addAll(i.getSet());
+            cost+=i.getWeight()* i.getSet().size();
         }
-        Iterator<Bundle> itr1 = result1.iterator();
-        while(itr.hasNext()){
-            names1.add((itr.next().name));
-        }
-        assert(names.containsAll(names));
-        assert(names1.containsAll(names1));
+        assertEquals( set , targetset);
+        assertEquals( 10 , cost);
+        //                                Bundels
+//                   1      2      3        4       5      6
+//               ----------------------------------------------
+//          1    |  *   |   *   |       |      |   *   |      |
+//               ----------------------------------------------
+//          2    |  *   |       |   *   |      |       |   *  |
+// Fauters        ----------------------------------------------
+//          3    |      |   *   |   *   |      |       |   *  |
+//               ----------------------------------------------
+//          4    |      |       |       |   *  |       |   *  |
+//               ----------------------------------------------
+//          5    |      |       |   *   |      |   *   |      |
+//               ----------------------------------------------
+//                  1       2      10       3      4      10
+//                                   Cots$
+
+        // DIE optimal Bundels sind 1 ,2 4 und 5
+        // Cost ist 10$ von 30$
 
 
 
 
 
     }
+
+
+
+
+
+    @ParameterizedTest
+    @MethodSource("getPriorityQueueInstances")
+    public void weightedSetBeispiel3(PriorityQueue<WeightedSet<Integer>> queue) {
+        System.out.println("Teste weightedSetBeispiel mit " + queue.getClass().getSimpleName());
+        Comparator <WeightedSet <Integer >> cw;
+        cw = Comparator.comparingDouble ( WeightedSet :: getWeight );
+        queue = new FibonacciHeap<>(cw.reversed ());
+
+        Set<Integer> targetset=new HashSet<>();
+        targetset.add(1);
+        targetset.add(2);
+        targetset.add(3);
+        targetset.add(4);
+        targetset.add(5);
+        Set<Integer> subset1=new HashSet<>();
+        subset1.add(1);
+        subset1.add(2);
+        subset1.add(3);
+        subset1.add(4);
+        subset1.add(5);
+        Set<Integer> subset2=new HashSet<>();
+        subset2.add(1);
+        subset2.add(3);
+        Set<Integer> subset3=new HashSet<>();
+        subset3.add(2);
+        subset3.add(3);
+        subset3.add(5);
+        Set<Integer> subset4=new HashSet<>();
+        subset4.add(4);
+        Set<Integer> subset5=new HashSet<>();
+        subset5.add(1);
+        subset5.add(5);
+        Set<Integer> subset6=new HashSet<>();
+        subset6.add(1);
+        subset6.add(2);
+        subset6.add(3);
+        subset6.add(4);
+        subset6.add(5);
+        Bundle bundl1=new Bundle("Bundle1",1,subset1);
+        Bundle bundl2=new Bundle("Bundle2",2,subset2);
+        Bundle bundl3=new Bundle("Bundle3",10,subset3);
+        Bundle bundl4=new Bundle("Bundle4",3,subset4);
+        Bundle bundl5=new Bundle("Bundle5",4,subset5);
+        Bundle bundl6=new Bundle("Bundle6",10,subset6);
+        Set<Bundle> familyOfSets=new HashSet<>();
+        familyOfSets.add(bundl1);
+        familyOfSets.add(bundl2);
+        familyOfSets.add(bundl3);
+        familyOfSets.add(bundl4);
+        familyOfSets.add(bundl5);
+        familyOfSets.add(bundl6);
+//-----------------------------------------------------------------------------------------
+        WeightedSetCovering cover = new WeightedSetCovering(targetset , familyOfSets , queue);
+        Set<WeightedSet<Integer>> coverset = cover.greedyWeightedCover();
+
+        Set<Integer> set =new HashSet<>();
+        double cost = 0 ;
+        for( WeightedSet<Integer> i : coverset){
+            set.addAll(i.getSet());
+            cost+=i.getWeight()* i.getSet().size();
+        }
+
+        assertEquals( 1 , cost);
+        assertEquals( set , targetset);
+    }
+
+
+
+//                                Bundels
+//                   1      2      3        4       5      6
+//               ----------------------------------------------
+//          1    |   *   |   *   |       |      |   *   |      |
+//               ----------------------------------------------
+//          2    |   *   |       |   *   |      |       |   *  |
+// Fauters        ----------------------------------------------
+//          3    |   *   |   *   |   *   |      |       |   *  |
+//               ----------------------------------------------
+//          4    |   *   |       |       |   *  |       |   *  |
+//               ----------------------------------------------
+//          5    |   *   |       |   *   |      |   *   |      |
+//               ----------------------------------------------
+//                  1       2      10       3      4      10
+//                                   Cots
+
+        // DIE optimal Bundels sind nur 1
+        // Cost ist 1$ von 30$
+
+
+
+    @ParameterizedTest
+    @MethodSource("getPriorityQueueInstances")
+    public void weightedSetBeispiel2(PriorityQueue<WeightedSet<Integer>> queue) {
+        System.out.println("Teste weightedSetBeispiel mit " + queue.getClass().getSimpleName());
+        Comparator<WeightedSet<Integer>> cw;
+        cw = Comparator.comparingDouble(WeightedSet::getWeight);
+        queue = new FibonacciHeap<>(cw.reversed());
+
+
+        Set<Integer> targetset = new HashSet<>();
+        targetset.add(1);
+        targetset.add(2);
+        targetset.add(3);
+        targetset.add(4);
+        targetset.add(5);
+        Set<Integer> subset1 = new HashSet<>();
+        subset1.add(1);
+        Set<Integer> subset2 = new HashSet<>();
+        Set<Integer> subset3 = new HashSet<>();
+        subset3.add(2);
+        Set<Integer> subset4 = new HashSet<>();
+        subset4.add(4);
+        Set<Integer> subset5 = new HashSet<>();
+        subset5.add(5);
+        Set<Integer> subset6 = new HashSet<>();
+        subset6.add(3);
+
+        Bundle bundl1 = new Bundle("Bundle1", 1, subset1);
+        Bundle bundl2 = new Bundle("Bundle2", 2, subset2);
+        Bundle bundl3 = new Bundle("Bundle3", 10, subset3);
+        Bundle bundl4 = new Bundle("Bundle4", 3, subset4);
+        Bundle bundl5 = new Bundle("Bundle5", 4, subset5);
+        Bundle bundl6 = new Bundle("Bundle6", 10, subset6);
+        Set<Bundle> familyOfSets = new HashSet<>();
+        familyOfSets.add(bundl1);
+        familyOfSets.add(bundl2);
+        familyOfSets.add(bundl3);
+        familyOfSets.add(bundl4);
+        familyOfSets.add(bundl5);
+        familyOfSets.add(bundl6);
+//-----------------------------------------------------------------------------------------
+        WeightedSetCovering cover = new WeightedSetCovering(targetset, familyOfSets, queue);
+        Set<WeightedSet<Integer>> coverset = cover.greedyWeightedCover();
+
+        Set<Integer> set =new HashSet<>();
+        double cost = 0 ;
+        for( WeightedSet<Integer> i : coverset){
+            set.addAll(i.getSet());
+            cost+=i.getWeight()* i.getSet().size();
+        }
+
+        assertEquals( 28 , cost);
+        assertEquals( set , targetset);
+
+
+//                                Bundels
+//                   1      2      3        4       5      6
+//               ----------------------------------------------
+//          1    |   *  |      |       |      |       |       |
+//               ----------------------------------------------
+//          2    |      |      |   *   |      |       |       |
+// Fauters        ----------------------------------------------
+//          3    |     |       |       |      |       |   *   |
+//               ----------------------------------------------
+//          4    |     |        |      |   *  |       |       |
+//               -----------------------------------------------
+//          5    |      |       |      |      |     *  |       |
+//               ----------------------------------------------
+//                  1       2      10       3      4      10
+//                                   Cots$
+
+
+        // DIE optimal Bundels sind nur 1 ,3,4,5,6
+        // cost 28$ von 30$
+
+
+    }
+
+
+
+
+
 }
+
+
