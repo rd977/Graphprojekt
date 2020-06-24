@@ -59,6 +59,7 @@ public class GraphTest {
         Assertions.assertThrows(InvalidNodeException.class, () -> graph.addEdge(6 ,0 ,55));
         Assertions.assertThrows(InvalidNodeException.class, () -> graph.addEdge(2,8 ,13));
         Assertions.assertThrows(DuplicateEdgeException.class, () -> graph.addEdge(1,2 ,45));
+        Assertions.assertThrows(DuplicateEdgeException.class, () -> graph.addEdge(2,2 ,45));
 
     }
     @Test
