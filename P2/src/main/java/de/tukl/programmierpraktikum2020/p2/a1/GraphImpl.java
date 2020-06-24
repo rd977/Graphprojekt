@@ -68,12 +68,10 @@ public class GraphImpl<D ,W> implements Graph<D ,W> {
 
     @Override
     public W getWeight(int fromId, int toId) throws InvalidEdgeException {
-        Node<D> tempNodefrom = Nodes.get(fromId);
-        Node<D> tempNodeto = Nodes.get(toId);
         Set<Integer> ne = new LinkedHashSet<>();
         ne.add(fromId);
         ne.add(toId);
-        if (tempNodefrom != null && tempNodeto != null && Edges.containsKey(ne)) {
+        if (Nodes.get(fromId) != null && Nodes.get(toId) != null && Edges.containsKey(ne)) {
             return Edges.get(ne);
         } else {
             throw new InvalidEdgeException(fromId, toId);
@@ -82,12 +80,10 @@ public class GraphImpl<D ,W> implements Graph<D ,W> {
 
     @Override
     public void setWeight(int fromId, int toId, W weight) throws InvalidEdgeException {
-        Node<D> tempNodefrom = Nodes.get(fromId);
-        Node<D> tempNodeto = Nodes.get(toId);
         Set<Integer> ne = new LinkedHashSet<>();
         ne.add(fromId);
         ne.add(toId);
-        if (tempNodefrom != null && tempNodeto != null && Edges.containsKey(ne)) {
+        if (Nodes.get(fromId) != null && Nodes.get(toId)!= null && Edges.containsKey(ne)) {
             Edges.replace(ne, weight);
         } else {
             throw new InvalidEdgeException(fromId, toId);
