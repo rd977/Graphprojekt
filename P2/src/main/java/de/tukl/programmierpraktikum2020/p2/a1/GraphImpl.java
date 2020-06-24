@@ -4,7 +4,7 @@ import java.util.*;
 
 public class GraphImpl<D ,W> implements Graph<D ,W> {
     HashMap<Integer, Node<D>> Nodes;
-    HashMap<Set<Integer>, W> Edges;
+    HashMap<List<Integer>, W> Edges;
     int size = 0;
 
     public GraphImpl() {
@@ -48,7 +48,7 @@ public class GraphImpl<D ,W> implements Graph<D ,W> {
     public void addEdge(int fromId, int toId, W weight) throws InvalidNodeException, DuplicateEdgeException {
         Node<D> tempNodefrom = Nodes.get(fromId);
         Node<D> tempNodeto = Nodes.get(toId);
-        Set<Integer> ne = new LinkedHashSet<>();
+        List<Integer> ne = new ArrayList<>();
         ne.add(fromId);
         ne.add(toId);
         if (tempNodefrom != null && tempNodeto != null && !Edges.containsKey(ne)&&tempNodefrom != tempNodeto) {
@@ -68,7 +68,7 @@ public class GraphImpl<D ,W> implements Graph<D ,W> {
 
     @Override
     public W getWeight(int fromId, int toId) throws InvalidEdgeException {
-        Set<Integer> ne = new LinkedHashSet<>();
+        List<Integer> ne = new ArrayList<>();
         ne.add(fromId);
         ne.add(toId);
         if (Nodes.get(fromId) != null && Nodes.get(toId) != null && Edges.containsKey(ne)) {
@@ -80,7 +80,7 @@ public class GraphImpl<D ,W> implements Graph<D ,W> {
 
     @Override
     public void setWeight(int fromId, int toId, W weight) throws InvalidEdgeException {
-        Set<Integer> ne = new LinkedHashSet<>();
+        List<Integer> ne = new ArrayList<>();
         ne.add(fromId);
         ne.add(toId);
         if (Nodes.get(fromId) != null && Nodes.get(toId)!= null && Edges.containsKey(ne)) {
@@ -131,7 +131,7 @@ public class GraphImpl<D ,W> implements Graph<D ,W> {
             throw new InvalidNodeException(nodeId);
         }
     }
-    public static void main(String[] arg) throws DuplicateEdgeException, InvalidNodeException, InvalidEdgeException {
+    /*public static void main(String[] arg) throws DuplicateEdgeException, InvalidNodeException, InvalidEdgeException {
         GraphImpl<Character ,Integer> graph = new GraphImpl<>();
         graph.addNode('A');
         graph.addNode('B');
@@ -150,12 +150,14 @@ public class GraphImpl<D ,W> implements Graph<D ,W> {
         graph.addEdge( 1,2 , 32);
         graph.addEdge( 2,3 , 46);
         graph.setWeight(4,3,4);
+        graph.setData(0,'A');
         for(Integer i : graph.getIncomingNeighbors(1)){
             System.out.println(graph.getData(i) + "---> "+ graph.getData(1) +" " + graph.getWeight(i , 1));
         }
         System.out.println("**********************");
         for(Integer i : graph.getOutgoingNeighbors(1)){
-            System.out.println(graph.getData(1) + "---> "+ graph.getData(i) +" " + graph.getWeight(i , 1));
+            System.out.println(graph.getData(1) + "---> "+ graph.getData(i) +" " + graph.getWeight(1 , i));
         }
-    }
+
+    }*/
 }
