@@ -152,14 +152,14 @@ public class GraphImpl<D ,W> implements Graph<D ,W> {
         graph.addEdge( 4,5 , 78);
         graph.addEdge( 1 ,3 , 77);
         graph.addEdge( 1,2 , 32);
-        graph.addEdge( 2,3 , 46);
+        graph.addEdge( 0,3 , 46);
         graph.setWeight(4,3,4);
         for(Integer i : graph.getIncomingNeighbors(3)){
-            System.out.println(i + "---> "+ "3" +" " + graph.getWeight(i , 3));
+            System.out.println(graph.getData(i) + "---> "+ graph.getData(3) +" " + graph.getWeight(i , 3));
         }
         System.out.println("**********************");
-        for(Integer i : graph.getOutgoingNeighbors(3)){
-            System.out.println(i);
+        for(Integer i : graph.getOutgoingNeighbors(4)){
+            System.out.println(graph.getData(4) + "---> "+ graph.getData(i) +" " + graph.getWeight(i , 4));
         }
     }
 }
