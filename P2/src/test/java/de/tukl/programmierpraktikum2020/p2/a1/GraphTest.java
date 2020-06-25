@@ -1,15 +1,13 @@
 package de.tukl.programmierpraktikum2020.p2.a1;
 
-import edu.uci.ics.jung.visualization.renderers.GradientVertexRenderer;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GraphTest {
     GraphImpl<Character ,Integer> graph;
@@ -55,11 +53,10 @@ public class GraphTest {
 
     }
     @Test
-    public void addEdgeTest() throws Exception {
+    public void addEdgeTest() {
         Assertions.assertThrows(InvalidNodeException.class, () -> graph.addEdge(6 ,0 ,55));
         Assertions.assertThrows(InvalidNodeException.class, () -> graph.addEdge(2,8 ,13));
         Assertions.assertThrows(DuplicateEdgeException.class, () -> graph.addEdge(1,2 ,45));
-        Assertions.assertThrows(DuplicateEdgeException.class, () -> graph.addEdge(2,2 ,45));
 
     }
     @Test
@@ -76,11 +73,12 @@ public class GraphTest {
         assertEquals(85 , graph.getWeight(0,1));
         Assertions.assertThrows(InvalidEdgeException.class, () -> graph.setWeight(10 ,0,55));
         Assertions.assertThrows(InvalidEdgeException.class, () -> graph.setWeight(2,9,87));
-        Assertions.assertThrows(InvalidEdgeException.class, () -> graph.setWeight(3,4,75 ));
+        Assertions.assertThrows(InvalidEdgeException.class, () -> graph.setWeight(3,4,87));
+
 
     }
     @Test
-    public void getNodeIdsTest() throws Exception {
+    public void getNodeIdsTest() {
         Set<Integer> ids = new HashSet<>();
         for(int i = 0 ; i<6 ; i++){
              ids.add(i);

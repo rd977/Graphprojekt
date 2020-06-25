@@ -51,7 +51,7 @@ public class GraphImpl<D ,W> implements Graph<D ,W> {
         List<Integer> ne = new ArrayList<>();
         ne.add(fromId);
         ne.add(toId);
-        if (tempNodefrom != null && tempNodeto != null && !Edges.containsKey(ne)&&tempNodefrom != tempNodeto) {
+        if (tempNodefrom != null && tempNodeto != null && !Edges.containsKey(ne)) {
             Edges.put(ne, weight);
             Nodes.get(fromId).outNods.put(toId, tempNodeto);
             Nodes.get(toId).inNods.put(fromId, tempNodefrom);
