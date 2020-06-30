@@ -3,7 +3,7 @@ package de.tukl.programmierpraktikum2020.p2.a1;
 import java.util.*;
 
 public class GraphImpl<D ,W> implements Graph<D ,W> {
-    HashMap<Integer, Node<D>> Nodes;
+    HashMap<Integer, Node<D>> Nodes; //get -> O(1) , itration-> o(n) , update -> O(1)
     HashMap<List<Integer>, W> Edges;
     int size = 0;
 
@@ -14,6 +14,7 @@ public class GraphImpl<D ,W> implements Graph<D ,W> {
     }
 
     @Override
+    //jeder neuen Knoten bekommt eine ID
     public int addNode(D data) {
         Node<D> node = new Node<>(data);
         node.id = size;
@@ -45,16 +46,19 @@ public class GraphImpl<D ,W> implements Graph<D ,W> {
     }
 
     @Override
+    
     public void addEdge(int fromId, int toId, W weight) throws InvalidNodeException, DuplicateEdgeException {
         Node<D> tempNodefrom = Nodes.get(fromId);
         Node<D> tempNodeto = Nodes.get(toId);
-        List<Integer> ne = new ArrayList<>();
-        ne.add(fromId);
-        ne.add(toId);
-        if (tempNodefrom != null && tempNodeto != null && !Edges.containsKey(ne)) {
-            Edges.put(ne, weight);
+        List<Integer> ids = new ArrayList<>(); // Der Key wird als ArrayList in Hashmap dargestellt und enthält zwei Werte
+        ids.add(fromId);
+        ids.add(toId);
+        //der source Knoten und distination Knoten müssen in Graph vorkommen und es keine Kante dazwichwen gibt
+        if (tempNodefrom != null && tempNodeto != null && !Edges.containsKey(ids)) {
+            Edges.put(ids, weight);
             Nodes.get(fromId).outNods.put(toId, tempNodeto);
             Nodes.get(toId).inNods.put(fromId, tempNodefrom);
+        
         } else {
             if (tempNodefrom == null) {
                 throw new InvalidNodeException(fromId);
@@ -68,11 +72,11 @@ public class GraphImpl<D ,W> implements Graph<D ,W> {
 
     @Override
     public W getWeight(int fromId, int toId) throws InvalidEdgeException {
-        List<Integer> ne = new ArrayList<>();
-        ne.add(fromId);
-        ne.add(toId);
-        if (Nodes.get(fromId) != null && Nodes.get(toId) != null && Edges.containsKey(ne)) {
-            return Edges.get(ne);
+        List<Integer> ids = new ArrayList<>();
+        ids.add(fromId);
+        ids.add(toId);
+        if (Nodes.get(fromId) != null && Nodes.get(toId) != null && Edges.containsKey(ids)) {
+            return Edges.get(ids);
         } else {
             throw new InvalidEdgeException(fromId, toId);
         }
@@ -80,11 +84,11 @@ public class GraphImpl<D ,W> implements Graph<D ,W> {
 
     @Override
     public void setWeight(int fromId, int toId, W weight) throws InvalidEdgeException {
-        List<Integer> ne = new ArrayList<>();
-        ne.add(fromId);
-        ne.add(toId);
-        if (Nodes.get(fromId) != null && Nodes.get(toId)!= null && Edges.containsKey(ne)) {
-            Edges.replace(ne, weight);
+        List<Integer> ids = new ArrayList<>();
+        ids.add(fromId);
+        ids.add(toId);
+        if (Nodes.get(fromId) != null && Nodes.get(toId)!= null && Edges.containsKey(ids)) {
+            Edges.replace(ids, weight);
         } else {
             throw new InvalidEdgeException(fromId, toId);
         }
