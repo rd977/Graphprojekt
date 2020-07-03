@@ -30,7 +30,8 @@ public class GameMoveImpl implements GameMove {
             if (temp.containsKey(graph.getData(i))) {
                 temp.replace(graph.getData(i), temp.get(graph.getData(i)) + 1);
             } else  {
-                temp.put(graph.getData(i), 0);
+                if(graph.getData(i) != Color.WHITE)
+                    temp.put(graph.getData(i), 1);
             }
         }
         Map.Entry<Color, Integer> maxEntry = null;
@@ -41,7 +42,6 @@ public class GameMoveImpl implements GameMove {
                 maxEntry = entry;
             }
         }
-
         return  maxEntry.getKey();
 
     }
@@ -61,7 +61,6 @@ public class GameMoveImpl implements GameMove {
             throw new ForcedColorException(nodeId, color);
         } else {
             graph.setData(nodeId, color);
-
             dfs(nodeId,color);
         }
     }
@@ -84,12 +83,13 @@ public class GameMoveImpl implements GameMove {
             }
             else {
                 graph.setWeight(fromId,toId,graph.getWeight(fromId,toId)-1);
-                Color color = check2(toId);
-                if(check(toId ,color)){
-                    graph.setData(toId, color);
-                    if(graph.getData(toId) != Color.WHITE)
-                        dfs(toId,color);
+                if(graph.getData(toId) != Color.WHITE){
+                     Color color = check2(toId);
+                      if(check(toId ,color)){
+                          graph.setData(toId, color);
+                          dfs(toId,color);
                 }
+            }
             }
     }
 }
