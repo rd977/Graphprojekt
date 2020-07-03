@@ -3,6 +3,8 @@ package de.tukl.programmierpraktikum2020.p2.a2;
 import de.tukl.programmierpraktikum2020.p2.a1.Graph;
 import de.tukl.programmierpraktikum2020.p2.a1.GraphException;
 
+import java.util.*;
+
 public class GameMoveImpl implements GameMove {
 
 
@@ -11,7 +13,7 @@ public class GameMoveImpl implements GameMove {
         this.graph = graph;
     }
 
-    public boolean check(int nodeId,Color color ) throws GraphException { // ob der Knoten gezwungen gefärbt wurde
+    public boolean check(int nodeId,Color color ) throws GraphException {
         int weightTotal = 0;
         int weightsColor= 0 ;
         for (int i : graph.getIncomingNeighbors(nodeId)){
@@ -21,6 +23,27 @@ public class GameMoveImpl implements GameMove {
             }
         }
         return  weightsColor > weightTotal/2 ;
+    }
+    public Color check2(int nodeId) throws GraphException {
+        HashMap<Color, Integer> temp = new HashMap<>();
+        for (int i : graph.getIncomingNeighbors(nodeId)) {
+            if (temp.containsKey(graph.getData(i))) {
+                temp.replace(graph.getData(i), temp.get(graph.getData(i)) + 1);
+            } else  {
+                temp.put(graph.getData(i), 0);
+            }
+        }
+        Map.Entry<Color, Integer> maxEntry = null;
+
+        for (Map.Entry<Color, Integer> entry : temp.entrySet()) {
+
+            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+                maxEntry = entry;
+            }
+        }
+
+        return  maxEntry.getKey();
+
     }
 
     private void dfs(int nodeId, Color color) throws GraphException {
@@ -38,6 +61,7 @@ public class GameMoveImpl implements GameMove {
             throw new ForcedColorException(nodeId, color);
         } else {
             graph.setData(nodeId, color);
+
             dfs(nodeId,color);
         }
     }
@@ -60,7 +84,12 @@ public class GameMoveImpl implements GameMove {
             }
             else {
                 graph.setWeight(fromId,toId,graph.getWeight(fromId,toId)-1);
-
+                Color color = check2(toId);
+                if(check(toId ,color)){
+                    graph.setData(toId, color);
+                    if(graph.getData(toId) != Color.WHITE)
+                        dfs(toId,color);
+                }
             }
     }
 }
